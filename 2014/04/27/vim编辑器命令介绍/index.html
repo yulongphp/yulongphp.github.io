@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="一个苦逼屌丝程序员的技术博客"><title>vim编辑器命令介绍 | Mryy的博客</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">vim编辑器命令介绍</h1><a id="logo" href="/.">Mryy的博客</a><p class="description">生活不仅只是敲代码，还有...调bug...</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">vim编辑器命令介绍</h1><div class="post-meta">Apr 27, 2014<span> | </span><span class="category"><a href="/categories/linux/">linux</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2014/04/27/vim编辑器命令介绍/" href="/2014/04/27/vim编辑器命令介绍/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><h3 id="vim编辑器"><a href="#vim编辑器" class="headerlink" title="vim编辑器"></a>vim编辑器</h3><p>文本编辑器，字处理器(内容为纯 <strong>ASCII</strong> )</p>
+<p>vi：Visual Interface<br>vim： VI improved</p>
+<p>全屏编辑器，模式化编辑器</p>
+<p><em><strong>vim模式</strong></em>： <code>编辑模式（命令模式）</code> 、<code>输入模式</code> 、 <code>末行模式</code></p>
+<h3 id="模式转换"><a href="#模式转换" class="headerlink" title="模式转换"></a>模式转换</h3><p>   编辑–&gt; 输入：</p>
+<ul>
+<li>i : 在当前光标所处字符的前面，转为输入模式</li>
+<li>a : 在当前光标所处字符的后面，转为输入模式</li>
+<li>o : 在当前光标所在行的下方，新建一行，并转为输入模式        </li>
+<li>I : 在当前光标所在行的行首，转换为输入模式</li>
+<li>A : 在当前光标所在行的行尾，转换为输入模式</li>
+<li>O : 在当前光标所在行的上方，新建一行，转换为输入模式</li>
+</ul>
+<p>输入–&gt; 编辑：</p>
+<ul>
+<li>ESC</li>
+</ul>
+<p>编辑–&gt;末行：</p>
+<ul>
+<li>只有编辑模式才能转换为末行模式，输入模式不能直接转换末行模式：</li>
+</ul>
+<p>末行–&gt;编辑</p>
+<ul>
+<li>ESC，ESC</li>
+</ul>
+<h3 id="一、打开文件"><a href="#一、打开文件" class="headerlink" title="一、打开文件"></a>一、打开文件</h3><pre><code>vim /path/to/somefile
+</code></pre><ul>
+<li>vim +#  : 打开文件并定位于第#行</li>
+<li>vim +   : 打开文件，定位至最后一行</li>
+<li>vim +/PATTERN : 打开文件，定位至第一次被PATTERN匹配到的行的行首</li>
+</ul>
+<p>默认处于编辑模式</p>
+<h3 id="二、关闭文件"><a href="#二、关闭文件" class="headerlink" title="二、关闭文件"></a>二、关闭文件</h3><ol>
+<li><p>末行模式关闭文件</p>
+<pre><code>q   不保存退出
+wq  保存并退出
+q!  不保存退出
+w   保存
+w!  强行保存（只有管理员能操作）
+wq --&gt; x 
+</code></pre></li>
+<li><p>编辑模式下退出</p>
+<pre><code>ZZ   保存并退出
+</code></pre></li>
+</ol>
+<h3 id="三、移动光标-（编辑模式）"><a href="#三、移动光标-（编辑模式）" class="headerlink" title="三、移动光标 （编辑模式）"></a>三、移动光标 （编辑模式）</h3><ol>
+<li><p>逐字符移动</p>
+<pre><code>h : 左
+l : 右
+j :    上
+k : 下
+#h : 向左移动#个字符
+</code></pre></li>
+<li><p>以单词为单位移动</p>
+<pre><code>w : 移至下一个单词的词首
+e : 跳至当前或下一个单词的词尾
+b : 跳至当前或前一个单词的词首
+#w 
+</code></pre></li>
+<li><p>行内跳转：</p>
+<pre><code>0 : 绝对行首
+^ : 行首的第一个空白字符
+$ : 绝对行尾
+{ ：段落跳转(向上一个段落跳转)
+} ：段落跳转(向下一个段落跳转)
+</code></pre></li>
+<li><p>行间跳转</p>
+<pre><code>#G 跳转至#行
+G 最后一行
+</code></pre><p> 末行模式下，直接给出行号即可</p>
+</li>
+</ol>
+<h3 id="四、-翻屏操作"><a href="#四、-翻屏操作" class="headerlink" title="四、 翻屏操作"></a>四、 翻屏操作</h3><ul>
+<li>ctrl+f : 向下翻一屏</li>
+<li>ctrl+b : 向上翻一屏</li>
+<li>ctrl+d : 向下翻半屏</li>
+<li>ctrl+u : 向上翻半屏</li>
+</ul>
+<h3 id="五、删除单个字符"><a href="#五、删除单个字符" class="headerlink" title="五、删除单个字符"></a>五、删除单个字符</h3><ul>
+<li>x ： 删除光标所在处单个字符 </li>
+<li>X :  删除光标前的字符</li>
+<li>#x ：删除光标所在处及向后的共#个字符</li>
+</ul>
+<h3 id="六、删除命令：-d"><a href="#六、删除命令：-d" class="headerlink" title="六、删除命令： d"></a>六、删除命令： d</h3><ol>
+<li><p>d命令和跳转命令组合使用</p>
+<h4 id="d-motion"><a href="#d-motion" class="headerlink" title="d  motion"></a>d  motion</h4><pre><code>其中：
+    d      - 删除操作符。
+    motion - 操作符的操作对象(在下面列出)。
+
+一个简短的动作列表：
+    w - 从当前光标当前位置直到下一个单词起始处，不包括它的第一个字符。
+    e - 从当前光标当前位置直到单词末尾，包括最后一个字符。
+    $ - 从当前光标当前位置直到当前行末。
+</code></pre><p> <code>#d跳转符</code> 删除跳转符指定范围的#号个</p>
+<pre><code>#dw 删除光标所在处到下#个单词的词首之间的字符
+#de 删除当前光标所在位置 到  离当前光标最近的 下 第#个单词词尾 之间的字符
+#db 
+</code></pre><p> <code>dd</code> ： 删除光标所在行</p>
+<pre><code>#dd : 删除包括当前光标所在行在内的#行
+</code></pre><p> <code>d$</code>  (D是它的缩写): 删除当前位置到行尾的字符</p>
+<blockquote>
+<p>   <em><strong>上面已经提到过删除操作符和动作的组合，您可以在组合中动作之前插入一个数字以删除更多：</strong></em><br>   <strong><code>d    number(数字)    motion</code></strong></p>
+</blockquote>
+</li>
+<li><p>末行模式下：</p>
+<pre><code>startADD，endADDd
+    :1,8d
+    :.,+5d
+    :.,100d
+
+.   : 当前行
+$   : 最后一行
++#  : 向下的#行
+</code></pre></li>
+</ol>
+<h3 id="七、粘贴命令"><a href="#七、粘贴命令" class="headerlink" title="七、粘贴命令"></a>七、粘贴命令</h3><ul>
+<li><p>p：如果删除的或复制的为整行内容，则粘贴至光标所在行的下方，如果复制或删除的内容为非整行，则粘贴至光标所在字符的后面</p>
+</li>
+<li><p>P：如果删除的或复制的为整行内容，则粘贴至光标所在行的上方，如果复制或删除的内容为非整行，则粘贴至光标所在字符的前面</p>
+</li>
+</ul>
+<h3 id="八、复制命令：-y"><a href="#八、复制命令：-y" class="headerlink" title="八、复制命令： y"></a>八、复制命令： y</h3><pre><code>用法同d命令相同
+</code></pre><h3 id="九、修改：先删除内容，再转换为输入模式"><a href="#九、修改：先删除内容，再转换为输入模式" class="headerlink" title="九、修改：先删除内容，再转换为输入模式"></a>九、修改：先删除内容，再转换为输入模式</h3><ul>
+<li>c ：用法同d命令</li>
+<li>cw：</li>
+<li>ce：</li>
+<li>cb：</li>
+</ul>
+<p><em><strong>提示：请注意 ce 命令不仅仅是删除了一个单词，它也让您进入插入模式了。</strong></em></p>
+<h3 id="十、替换：r"><a href="#十、替换：r" class="headerlink" title="十、替换：r"></a>十、替换：r</h3><ul>
+<li><p>r：替换单个字符</p>
+</li>
+<li><p>R：替换模式</p>
+</li>
+</ul>
+<h3 id="十一、撤销编辑操作：u"><a href="#十一、撤销编辑操作：u" class="headerlink" title="十一、撤销编辑操作：u"></a>十一、撤销编辑操作：u</h3><ul>
+<li><p>u：撤销前一次的编辑操作</p>
+</li>
+<li><p>U(大写u)： 撤消在一行中所做的改动</p>
+</li>
+<li><p>连续u命令可撤销此前的n此操作（vim最多可保存50次编辑操作，所以最多可撤销前50次操作）</p>
+</li>
+<li><p>还原最近一次撤销操作 ctrl+r</p>
+</li>
+</ul>
+<h3 id="十二、重复前一次编辑操作"><a href="#十二、重复前一次编辑操作" class="headerlink" title="十二、重复前一次编辑操作"></a>十二、重复前一次编辑操作</h3><pre><code>.
+</code></pre><h3 id="十三、可视化模式"><a href="#十三、可视化模式" class="headerlink" title="十三、可视化模式"></a>十三、可视化模式</h3><ul>
+<li><p>v： 按字符选取</p>
+</li>
+<li><p>V : 按矩形选取</p>
+</li>
+</ul>
+<h3 id="十四、查找"><a href="#十四、查找" class="headerlink" title="十四、查找"></a>十四、查找</h3><ul>
+<li><p>/pattern  从当前光标所在行向文件尾部查找符合pattern的字符</p>
+</li>
+<li><p>？pattern  从当前光标所在行向文件头部查找符合pattern的字符</p>
+</li>
+<li><p>n 跳转下一个匹配字符串</p>
+</li>
+<li><p>N 跳转上一个匹配字符串</p>
+</li>
+</ul>
+<h3 id="十五、查找并替换"><a href="#十五、查找并替换" class="headerlink" title="十五、查找并替换"></a>十五、查找并替换</h3><ul>
+<li><p>在末行模式下使用s命令</p>
+</li>
+<li><p>ADDR1，ADDR2s@PATTERN@string@gi</p>
+<ul>
+<li><p>如 ：1,5s/dir/DIR/g</p>
+</li>
+<li><p>1,$ : 表示全文</p>
+</li>
+<li>%  :  表示全文</li>
+</ul>
+</li>
+</ul>
+<h3 id="十六、使用vim编辑多个文件"><a href="#十六、使用vim编辑多个文件" class="headerlink" title="十六、使用vim编辑多个文件"></a>十六、使用vim编辑多个文件</h3><pre><code>vim FILE1 FILE2 FILE3
+
+    ：next 切换至下一个文件
+    ：prev 切换至钱一个文件
+    ：last 切换至最后一个文件
+    ：first 切换至第一个文件
+
+退出
+    ：qa 全部退出
+</code></pre><h3 id="十七、-分屏显示一个文件"><a href="#十七、-分屏显示一个文件" class="headerlink" title="十七、 分屏显示一个文件"></a>十七、 分屏显示一个文件</h3><pre><code>Ctrl+w， s ： 水平拆分窗口
+
+Ctrl+w， v ： 垂直拆分窗口
+
+在窗口件切换光标：
+
+    Ctrl+w，↑   切换到上半屏
+    Ctrl+w，↓   切换到下半屏
+
+    Ctrl+w，←   切换到左半屏
+    Ctrl+w，→   切换到右半屏
+
+：qa 关闭所有窗口
+</code></pre><h3 id="十八、分窗口显示多个文件"><a href="#十八、分窗口显示多个文件" class="headerlink" title="十八、分窗口显示多个文件"></a>十八、分窗口显示多个文件</h3><ul>
+<li>vim -o ：水平分割显示</li>
+<li>vim -O ：垂直分割显示</li>
+</ul>
+<h3 id="十九、将当前文件中部分内容另存为另一个文件"><a href="#十九、将当前文件中部分内容另存为另一个文件" class="headerlink" title="十九、将当前文件中部分内容另存为另一个文件"></a>十九、将当前文件中部分内容另存为另一个文件</h3><pre><code>末行模式下使用w命令
+
+    ：w
+    ：ADDR1，ADDR2w /path/to/somwhere
+</code></pre><h3 id="二十、经另外一个文件的内容填充在当前文件中"><a href="#二十、经另外一个文件的内容填充在当前文件中" class="headerlink" title="二十、经另外一个文件的内容填充在当前文件中"></a>二十、经另外一个文件的内容填充在当前文件中</h3><pre><code>：r /path/to/somewhere
+</code></pre><h3 id="二十一、跟shell交互"><a href="#二十一、跟shell交互" class="headerlink" title="二十一、跟shell交互"></a>二十一、跟shell交互</h3><pre><code>：！ command
+</code></pre><h3 id="二十二、高级话题"><a href="#二十二、高级话题" class="headerlink" title="二十二、高级话题"></a>二十二、高级话题</h3><ol>
+<li>显示或取消行号<pre><code>：set number
+：set nu
+：set nonu
+</code></pre></li>
+<li><p>显示忽略或区分字符大小写</p>
+<pre><code>：set ignorecase
+：set ic
+：set noignorecase
+：set noic
+</code></pre></li>
+<li><p>设置自动缩进</p>
+<pre><code>：set sutoindent
+：set ai
+：set noai
+</code></pre></li>
+<li><p>查找到的文本高高亮显示或取消</p>
+<pre><code>：set hlsearch
+：set nohlsearch
+</code></pre></li>
+</ol>
+<ol start="5">
+<li><p>语法高亮</p>
+<pre><code>：syntax on  开启
+：syntax off 关闭
+</code></pre><p><em><strong>这些设定只对当前vim进程生效</strong></em></p>
+</li>
+</ol>
+<h3 id="二十三、配置文件"><a href="#二十三、配置文件" class="headerlink" title="二十三、配置文件"></a>二十三、配置文件</h3><ul>
+<li>/etc/vim/vimrc ubuntu    </li>
+<li>/etc/vimrc redhat</li>
+<li>～/.vimrc</li>
+</ul>
+<h3 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h3><p>vim 强制退出进程  </p>
+<p>交换文件 “.initramfs.conf.swp” 已存在！<br>以只读方式打开([O]), 直接编辑((E)), 恢复((R)), 退出((Q)), 中止((A)):</p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yulongphp.github.io/2014/04/27/vim编辑器命令介绍/" data-id="cjl50d9sa0014w78yk99opgde" class="article-share-link">分享到</a><div class="tags"><a href="/tags/linux/">linux</a><a href="/tags/vim/">vim</a></div><div class="post-nav"><a href="/2014/04/27/vimtutor教程小结/" class="pre">vimtutor教程小结</a><a href="/2014/03/28/你好/" class="next">Markdown语法</a></div><div id="disqus_thread"><script>var disqus_shortname = 'yulong';
+var disqus_identifier = '2014/04/27/vim编辑器命令介绍/';
+var disqus_title = 'vim编辑器命令介绍';
+var disqus_url = 'http://yulongphp.github.io/2014/04/27/vim编辑器命令介绍/';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//yulong.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yulongphp.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/debian/">debian</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sublime/">sublime</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/日志/">日志</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/tk/" style="font-size: 15px;">tk</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/list/" style="font-size: 15px;">list</a> <a href="/tags/tuple/" style="font-size: 15px;">tuple</a> <a href="/tags/debian/" style="font-size: 15px;">debian</a> <a href="/tags/MarkDown/" style="font-size: 15px;">MarkDown</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/service/" style="font-size: 15px;">service</a> <a href="/tags/nginx/" style="font-size: 15px;">nginx</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/tcl/" style="font-size: 15px;">tcl</a> <a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/vim/" style="font-size: 15px;">vim</a> <a href="/tags/vsftp/" style="font-size: 15px;">vsftp</a> <a href="/tags/开始/" style="font-size: 15px;">开始</a> <a href="/tags/我/" style="font-size: 15px;">我</a> <a href="/tags/日记/" style="font-size: 15px;">日记</a> <a href="/tags/sublime/" style="font-size: 15px;">sublime</a> <a href="/tags/ubuntu/" style="font-size: 15px;">ubuntu</a> <a href="/tags/sudo/" style="font-size: 15px;">sudo</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/安全/" style="font-size: 15px;">安全</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/05/05/mysql查询优化/">mysql查询优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/30/linux性能监控常用命令/">Linux 性能监控那些令人激赏的命令行工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/06/02/C语言的局部变量和全局变量/">C语言的局部变量和全局变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/05/31/c语言输入和输出/">c语言输入和输出</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/05/18/c语言变量和数据类型/">c语言变量和数据类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/04/25/30个有关Python的小技巧/">30个有关Python的小技巧</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/30/debain-解决无法显示中文/">debain 解决无法显示中文</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/27/python-Tcl-Tk包问题/">python Tcl/Tk包问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/25/如何使用sublime编辑器运行python程序/">如何使用sublime编辑器运行python程序</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/03/09/Python交互模式下方向键出现乱码/">Python交互模式下方向键出现乱码</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//yulong.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://yanshinian.com/" title="言十年" target="_blank">言十年</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Mryy的博客.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
