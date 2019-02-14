@@ -1,0 +1,402 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="一个苦逼屌丝程序员的技术博客"><title>Github上开源的安全渗透攻击类工具集合 | Mryy的博客</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Github上开源的安全渗透攻击类工具集合</h1><a id="logo" href="/.">Mryy的博客</a><p class="description">生活不仅只是敲代码，还有...调bug...</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Github上开源的安全渗透攻击类工具集合</h1><div class="post-meta">Aug 24, 2018<span> | </span><span class="category"><a href="/categories/linux/">linux</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2018/08/24/hack_tools_assm/" href="/2018/08/24/hack_tools_assm/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>转载自：<a href="https://www.cnblogs.com/yylingyao/p/8997607.html" target="_blank" rel="noopener">https://www.cnblogs.com/yylingyao/p/8997607.html</a></p>
+<blockquote>
+<p>本工具包收集的初衷是向各类行业安全从业人员提供在企业信息安全防护体系建设过程中可以参考的各种开源或非开源安全扫描工具，以帮助安全从业人员对自身业务进行自检，从而提高安全性。</p>
+</blockquote>
+<p>免责说明<br>请勿用于非法的用途，否则造成的严重后果与本项目无关</p>
+<a id="more"></a>
+<h3 id="漏洞及渗透练习平台："><a href="#漏洞及渗透练习平台：" class="headerlink" title="漏洞及渗透练习平台："></a>漏洞及渗透练习平台：</h3><ul>
+<li><a href="https://github.com/710leo/ZVulDrill" target="_blank" rel="noopener">https://github.com/710leo/ZVulDrill</a> (ZVulDrill )</li>
+<li><a href="https://github.com/cliffe/secgen" target="_blank" rel="noopener">https://github.com/cliffe/secgen</a> (SecGen Ruby编写的一款工具，生成含漏洞的虚拟机)</li>
+<li><a href="https://github.com/CSPF-Founder/btslab" target="_blank" rel="noopener">https://github.com/CSPF-Founder/btslab</a>  (btslab渗透测试实验室)</li>
+<li><a href="https://github.com/WebGoat/WebGoat" target="_blank" rel="noopener">https://github.com/WebGoat/WebGoat</a> (WebGoat漏洞练习环境)</li>
+<li><a href="https://github.com/WebGoat/WebGoat-Legacy" target="_blank" rel="noopener">https://github.com/WebGoat/WebGoat-Legacy</a> (WebGoat漏洞练习环境)</li>
+<li><a href="https://github.com/RandomStorm/DVWA" target="_blank" rel="noopener">https://github.com/RandomStorm/DVWA</a> (Damn Vulnerable Web Application(漏洞练习平台))</li>
+<li><a href="https://github.com/stamparm/DSVW" target="_blank" rel="noopener">https://github.com/stamparm/DSVW</a> (轻量网漏洞演示平台)</li>
+<li><a href="https://github.com/joe-shenouda/awesome-cyber-skills" target="_blank" rel="noopener">https://github.com/joe-shenouda/awesome-cyber-skills</a> (黑客技术训练环境)</li>
+<li><a href="https://github.com/OWASP/SecurityShepherd" target="_blank" rel="noopener">https://github.com/OWASP/SecurityShepherd</a> (网络及应用渗透训练平台)</li>
+<li><a href="https://github.com/MyKings/docker-vulnerability-environment" target="_blank" rel="noopener">https://github.com/MyKings/docker-vulnerability-environment</a> (docker搭建的漏洞练习环境)</li>
+<li><a href="https://github.com/Audi-1/sqli-labs" target="_blank" rel="noopener">https://github.com/Audi-1/sqli-labs</a> (数据库注入练习平台)</li>
+<li><a href="https://github.com/cr0hn/vulnerable-node" target="_blank" rel="noopener">https://github.com/cr0hn/vulnerable-node</a> (用节点编写漏洞练习平台，如OWASP Node Goat)</li>
+<li><a href="https://github.com/nmap/nmap" target="_blank" rel="noopener">https://github.com/nmap/nmap</a> (花式扫描器 ：端口扫描器Nmap)</li>
+<li><a href="https://github.com/SkyLined/LocalNetworkScanner" target="_blank" rel="noopener">https://github.com/SkyLined/LocalNetworkScanner</a> (本地网络扫描器)</li>
+<li><a href="https://github.com/lijiejie/subDomainsBrute" target="_blank" rel="noopener">https://github.com/lijiejie/subDomainsBrute</a> (子域名扫描器)</li>
+<li><a href="https://github.com/jh00nbr/RouterhunterBR" target="_blank" rel="noopener">https://github.com/jh00nbr/RouterhunterBR</a> (漏洞路由扫描器)</li>
+</ul>
+<h3 id="信息搜集工具"><a href="#信息搜集工具" class="headerlink" title="信息搜集工具"></a>信息搜集工具</h3><ul>
+<li><a href="https://github.com/n0tr00t/Sreg" target="_blank" rel="noopener">https://github.com/n0tr00t/Sreg</a> (社工插件，可查找以电子邮件，电话，用户名的注册的所有网站账号信息)</li>
+<li><a href="https://github.com/sea-god/gitscan" target="_blank" rel="noopener">https://github.com/sea-god/gitscan</a> (Github上的信息搜集，实时柯林斯查询扫描的Git的最新上传有关邮箱账号密码信息)</li>
+<li><a href="https://github.com/metac0rtex/GitHarvester" target="_blank" rel="noopener">https://github.com/metac0rtex/GitHarvester</a> (github Repo信息搜集工具)</li>
+</ul>
+<h3 id="WEB："><a href="#WEB：" class="headerlink" title="WEB："></a>WEB：</h3><ul>
+<li><a href="https://github.com/tennc/webshell" target="_blank" rel="noopener">https://github.com/tennc/webshell</a> (木马后门的大合集)</li>
+<li><a href="https://github.com/brianwrf/hackUtils" target="_blank" rel="noopener">https://github.com/brianwrf/hackUtils</a> (渗透以及网络攻击脚本)</li>
+<li><a href="https://github.com/rootphantomer/hack_tools_for_me" target="_blank" rel="noopener">https://github.com/rootphantomer/hack_tools_for_me</a> (网络渗透小工具大合集)</li>
+<li><a href="https://github.com/firesunCN/BlueLotus_XSSReceiver" target="_blank" rel="noopener">https://github.com/firesunCN/BlueLotus_XSSReceiver</a> (XSS数据接收平台)</li>
+</ul>
+<h3 id="XSS与CSRF工具"><a href="#XSS与CSRF工具" class="headerlink" title="XSS与CSRF工具"></a>XSS与CSRF工具</h3><ul>
+<li><a href="https://github.com/evilcos/xssor" target="_blank" rel="noopener">https://github.com/evilcos/xssor</a> (xss转换工具)</li>
+<li><p><a href="https://github.com/stasinopoulos/commix" target="_blank" rel="noopener">https://github.com/stasinopoulos/commix</a> (命令注入开发者的简称，网站向命令注入检测工具)</p>
+</li>
+<li><p><a href="https://github.com/zt2/sqli-hunter" target="_blank" rel="noopener">https://github.com/zt2/sqli-hunter</a> (Web代理，通过加载sqlmap api进行sqli实时检测)</p>
+</li>
+<li><p><a href="https://github.com/Chora10/Cknife" target="_blank" rel="noopener">https://github.com/Chora10/Cknife</a> (新版中国菜刀)</p>
+</li>
+<li><a href="https://github.com/lijiejie/GitHack" target="_blank" rel="noopener">https://github.com/lijiejie/GitHack</a> (混帐的泄露利用EXP)</li>
+<li><a href="https://github.com/beefproject/beef" target="_blank" rel="noopener">https://github.com/beefproject/beef</a> (浏览器攻击框架)</li>
+<li><a href="https://github.com/khalilbijjou/WAFNinja" target="_blank" rel="noopener">https://github.com/khalilbijjou/WAFNinja</a> (自动化绕过WAF脚本)</li>
+<li><a href="https://github.com/jkbrzt/httpie" target="_blank" rel="noopener">https://github.com/jkbrzt/httpie</a> (HTTP命令行客户端，可以从命令行构造发送各种HTTP请求(类似于卷曲))</li>
+<li><a href="https://github.com/firebug/firebug" target="_blank" rel="noopener">https://github.com/firebug/firebug</a> (浏览器调试利器)</li>
+<li><a href="https://github.com/SpiderLabs/ModSecurity" target="_blank" rel="noopener">https://github.com/SpiderLabs/ModSecurity</a> (一款开源WAF)</li>
+<li><a href="https://github.com/owtf/wafbypasser" target="_blank" rel="noopener">https://github.com/owtf/wafbypasser</a> (WAF绕过检测工具)</li>
+<li><a href="https://github.com/julienbedard/browsersploit" target="_blank" rel="noopener">https://github.com/julienbedard/browsersploit</a> (浏览器攻击框架)</li>
+<li><a href="https://github.com/guillotines/WebShell" target="_blank" rel="noopener">https://github.com/guillotines/WebShell</a> (网络端的木马后门管理器)</li>
+<li><a href="https://github.com/mgeeky/tomcatWarDeployer" target="_blank" rel="noopener">https://github.com/mgeeky/tomcatWarDeployer</a> (Tomcat的的自动后门部署)</li>
+</ul>
+<h3 id="窗口域渗透工具："><a href="#窗口域渗透工具：" class="headerlink" title="窗口域渗透工具："></a>窗口域渗透工具：</h3><ul>
+<li><a href="https://github.com/gentilkiwi/mimikatz" target="_blank" rel="noopener">https://github.com/gentilkiwi/mimikatz</a> (窗户渗透神器)</li>
+<li><a href="https://github.com/PowerShellMafia/PowerSploit" target="_blank" rel="noopener">https://github.com/PowerShellMafia/PowerSploit</a> (PowerShell中的渗透库合集)</li>
+<li><a href="https://github.com/clymb3r/PowerShell" target="_blank" rel="noopener">https://github.com/clymb3r/PowerShell</a> (PowerShell的工具合集)</li>
+<li><a href="https://github.com/putterpanda/mimikittenz" target="_blank" rel="noopener">https://github.com/putterpanda/mimikittenz</a> (从内存中提取敏感信息的工具)</li>
+</ul>
+<h3 id="FireEye的的红军渗透工具"><a href="#FireEye的的红军渗透工具" class="headerlink" title="FireEye的的红军渗透工具"></a>FireEye的的红军渗透工具</h3><ul>
+<li><a href="https://github.com/chango77747/AdEnumerator" target="_blank" rel="noopener">https://github.com/chango77747/AdEnumerator</a></li>
+<li><a href="https://github.com/Raikia/CredNinja" target="_blank" rel="noopener">https://github.com/Raikia/CredNinja</a></li>
+<li><a href="https://github.com/ChrisTruncer/WMIOps" target="_blank" rel="noopener">https://github.com/ChrisTruncer/WMIOps</a></li>
+<li><a href="https://github.com/ChrisTruncer/EyeWitness" target="_blank" rel="noopener">https://github.com/ChrisTruncer/EyeWitness</a></li>
+<li><a href="https://github.com/ChrisTruncer/Exgress-Assess" target="_blank" rel="noopener">https://github.com/ChrisTruncer/Exgress-Assess</a></li>
+</ul>
+<h3 id="模糊："><a href="#模糊：" class="headerlink" title="模糊："></a>模糊：</h3><ul>
+<li><a href="https://github.com/xmendez/wfuzz" target="_blank" rel="noopener">https://github.com/xmendez/wfuzz</a> (网络向发子工具)</li>
+<li><a href="https://github.com/lijiejie/htpwdScan" target="_blank" rel="noopener">https://github.com/lijiejie/htpwdScan</a> (HTTP暴力破解，撞库攻击脚本)</li>
+</ul>
+<h3 id="漏洞利用及攻击框架："><a href="#漏洞利用及攻击框架：" class="headerlink" title="漏洞利用及攻击框架："></a>漏洞利用及攻击框架：</h3><ul>
+<li><a href="https://github.com/rapid7/metasploit-framework" target="_blank" rel="noopener">https://github.com/rapid7/metasploit-framework</a> (无国界医生)</li>
+<li><a href="https://github.com/erevus-cn/pocscan" target="_blank" rel="noopener">https://github.com/erevus-cn/pocscan</a> (POC调用框架，可加载Pocsuite，Tangscan，Beebeeto等)</li>
+<li><a href="https://github.com/knownsec/Pocsuite" target="_blank" rel="noopener">https://github.com/knownsec/Pocsuite</a> (Pocsuite)</li>
+<li><a href="https://github.com/n0tr00t/Beebeeto-framework" target="_blank" rel="noopener">https://github.com/n0tr00t/Beebeeto-framework</a> (Beebeeto)</li>
+</ul>
+<h3 id="漏洞POC＆EXP："><a href="#漏洞POC＆EXP：" class="headerlink" title="漏洞POC＆EXP："></a>漏洞POC＆EXP：</h3><ul>
+<li><a href="https://github.com/offensive-security/exploit-database" target="_blank" rel="noopener">https://github.com/offensive-security/exploit-database</a> (ExploitDB官方的Git的版本)</li>
+<li><a href="https://github.com/80vul/phpcodz" target="_blank" rel="noopener">https://github.com/80vul/phpcodz</a> (PHP漏洞代码分析)</li>
+<li><a href="https://github.com/FiloSottile/CVE-2016-2107" target="_blank" rel="noopener">https://github.com/FiloSottile/CVE-2016-2107</a> (CVE-2016至2107年简单测试)</li>
+<li><a href="https://github.com/fjserna/CVE-2015-7547" target="_blank" rel="noopener">https://github.com/fjserna/CVE-2015-7547</a> (CVE-2015-7547 POC)</li>
+<li><a href="https://github.com/frohoff/ysoserial" target="_blank" rel="noopener">https://github.com/frohoff/ysoserial</a> (Java的的反序列化POC生成工具)</li>
+<li><a href="https://github.com/foxglovesec/JavaUnserializeExploits" target="_blank" rel="noopener">https://github.com/foxglovesec/JavaUnserializeExploits</a> (JAVA反序列化EXP)</li>
+<li><a href="https://github.com/CaledoniaProject/jenkins-cli-exploit" target="_blank" rel="noopener">https://github.com/CaledoniaProject/jenkins-cli-exploit</a> (Jenkins CommonCollections EXP)</li>
+<li><a href="https://github.com/vlad902/hacking-team-windows-kernel-lpe" target="_blank" rel="noopener">https://github.com/vlad902/hacking-team-windows-kernel-lpe</a> (CVE-2015-2426 EXP(windows内核提权))</li>
+<li><a href="https://github.com/hxer/vulnapp" target="_blank" rel="noopener">https://github.com/hxer/vulnapp</a> (使用 Docker 显示Web攻击(php本地文件包含结合phpinfo getshell以及ssrf结合curl的利用演示))</li>
+<li><a href="https://github.com/GoSecure/php7-opcache-override" target="_blank" rel="noopener">https://github.com/GoSecure/php7-opcache-override</a> (PHP7缓存覆写漏洞演示及相关工具)</li>
+<li><a href="https://github.com/XcodeGhostSource/XcodeGhost" target="_blank" rel="noopener">https://github.com/XcodeGhostSource/XcodeGhost</a> (XcodeGhost木马样本)</li>
+<li><a href="https://github.com/citronneur/rdp" target="_blank" rel="noopener">https://github.com/citronneur/rdp</a> (哈希长度扩展攻击EXP)</li>
+</ul>
+<h3 id="中间人攻击及钓鱼："><a href="#中间人攻击及钓鱼：" class="headerlink" title="中间人攻击及钓鱼："></a>中间人攻击及钓鱼：</h3><p>中间人攻击框架</p>
+<ul>
+<li><a href="https://github.com/secretsquirrel/the-backdoor-factory" target="_blank" rel="noopener">https://github.com/secretsquirrel/the-backdoor-factory</a></li>
+<li><a href="https://github.com/secretsquirrel/BDFProxy" target="_blank" rel="noopener">https://github.com/secretsquirrel/BDFProxy</a></li>
+<li><a href="https://github.com/byt3bl33d3r/MITMf" target="_blank" rel="noopener">https://github.com/byt3bl33d3r/MITMf</a></li>
+<li><a href="https://github.com/DanMcInerney/LANs.py" target="_blank" rel="noopener">https://github.com/DanMcInerney/LANs.py</a> (注册代码，阻止无线上网和间谍无线用户)</li>
+<li><a href="https://github.com/intrepidusgroup/mallory" target="_blank" rel="noopener">https://github.com/intrepidusgroup/mallory</a> (可扩展的中间人代理工具)</li>
+<li><a href="https://github.com/sophron/wifiphisher" target="_blank" rel="noopener">https://github.com/sophron/wifiphisher</a> (无线网络钓鱼)</li>
+</ul>
+<h3 id="密码破解："><a href="#密码破解：" class="headerlink" title="密码破解："></a>密码破解：</h3><ul>
+<li><a href="https://github.com/shinnok/johnny" target="_blank" rel="noopener">https://github.com/shinnok/johnny</a> (密码破解工具)</li>
+<li><a href="https://github.com/AlessandroZ/LaZagne" target="_blank" rel="noopener">https://github.com/AlessandroZ/LaZagne</a> (本地存储的各类密码提取利器)</li>
+</ul>
+<h3 id="二进制及代码分析工具："><a href="#二进制及代码分析工具：" class="headerlink" title="二进制及代码分析工具："></a>二进制及代码分析工具：</h3><ul>
+<li><a href="https://github.com/devttys0/binwalk" target="_blank" rel="noopener">https://github.com/devttys0/binwalk</a> (二进制分析工具)</li>
+<li><a href="https://github.com/quarkslab/binmap" target="_blank" rel="noopener">https://github.com/quarkslab/binmap</a> (系统扫描器，用于寻找程序和库然后收集他们的依赖关系，链接等信息)</li>
+<li><a href="https://github.com/0vercl0k/rp" target="_blank" rel="noopener">https://github.com/0vercl0k/rp</a> (rp ++是一个完整的cpp编写工具，旨在在PE/Elf/Mach-O(不支持FAT二进制文件)x86/x64二进制文件中查找ROP序列。)</li>
+<li><a href="https://github.com/lillypad/badger" target="_blank" rel="noopener">https://github.com/lillypad/badger</a> (的Windows漏洞开发工具)</li>
+<li><a href="https://github.com/bdcht/amoco" target="_blank" rel="noopener">https://github.com/bdcht/amoco</a> (二进制静态分析工具(Python))</li>
+<li><a href="https://github.com/longld/peda" target="_blank" rel="noopener">https://github.com/longld/peda</a> (Python的开发GDB开发协助)</li>
+<li><a href="https://github.com/ValdikSS/billgates-botnet-tracker" target="_blank" rel="noopener">https://github.com/ValdikSS/billgates-botnet-tracker</a> (对BillGate Linux Botnet系木马活动的监控工具)</li>
+<li><a href="https://github.com/kevthehermit/RATDecoders" target="_blank" rel="noopener">https://github.com/kevthehermit/RATDecoders</a> (木马配置参数提取工具)</li>
+<li><a href="https://github.com/angr/angr" target="_blank" rel="noopener">https://github.com/angr/angr</a> (Shellphish编写的二进制分析工具(CTF向))</li>
+<li><a href="https://github.com/yinwang0/pysonar2" target="_blank" rel="noopener">https://github.com/yinwang0/pysonar2</a> (针对蟒蛇的静态代码分析工具)</li>
+<li><a href="https://github.com/koalaman/shellcheck" target="_blank" rel="noopener">https://github.com/koalaman/shellcheck</a> (一个自动化的脚本(壳)分析工具，用来给出警告和建议)</li>
+<li><a href="https://github.com/ChiChou/etacsufbo" target="_blank" rel="noopener">https://github.com/ChiChou/etacsufbo</a> (基于AST的变换简易的JavaScript的反混淆辅助工具) </li>
+</ul>
+<h3 id="EXP编写框架及工具："><a href="#EXP编写框架及工具：" class="headerlink" title="EXP编写框架及工具："></a>EXP编写框架及工具：</h3><ul>
+<li><a href="https://github.com/t00sh/rop-tool" target="_blank" rel="noopener">https://github.com/t00sh/rop-tool</a> (二进制EXP编写工具)</li>
+<li><a href="https://github.com/Gallopsled/pwntools" target="_blank" rel="noopener">https://github.com/Gallopsled/pwntools</a> (CTF Pwn类题目脚本编写框架)</li>
+<li><a href="https://github.com/zTrix/zio" target="_blank" rel="noopener">https://github.com/zTrix/zio</a> (一个易于使用的IO库，用于打包开发)</li>
+<li><a href="https://github.com/frida/frida" target="_blank" rel="noopener">https://github.com/frida/frida</a> (跨平台注入工具(插入JavaScript以浏览Windows，Mac，Linux，iOS 和 Android上的本机应用程序。))</li>
+</ul>
+<h3 id="隐写："><a href="#隐写：" class="headerlink" title="隐写："></a>隐写：</h3><ul>
+<li><a href="https://github.com/abeluck/stegdetect" target="_blank" rel="noopener">https://github.com/abeluck/stegdetect</a> (隐写检测工具)</li>
+</ul>
+<h3 id="各类安全资料："><a href="#各类安全资料：" class="headerlink" title="各类安全资料："></a>各类安全资料：</h3><ul>
+<li><a href="https://github.com/l3m0n/pentest_study" target="_blank" rel="noopener">https://github.com/l3m0n/pentest_study</a> (域渗透教程)</li>
+<li><a href="http://www.primalsecurity.net/tutorials/python-tutorials/" target="_blank" rel="noopener">http://www.primalsecurity.net/tutorials/python-tutorials/</a> (python security教程(原文链接)</li>
+<li><a href="https://github.com/smartFlash/pySecurity" target="_blank" rel="noopener">https://github.com/smartFlash/pySecurity</a></li>
+<li><a href="https://github.com/ClickSecurity/data_hacking" target="_blank" rel="noopener">https://github.com/ClickSecurity/data_hacking</a> (data_hacking合集)</li>
+<li><a href="https://github.com/exploitprotocol/mobile-security-wiki" target="_blank" rel="noopener">https://github.com/exploitprotocol/mobile-security-wiki</a> (移动安全维基)</li>
+<li><a href="https://github.com/veficos/reverse-engineering-for-beginners" target="_blank" rel="noopener">https://github.com/veficos/reverse-engineering-for-beginners</a> (书籍“反向工程换初学者”)</li>
+<li><a href="https://github.com/luyg24/IT_security" target="_blank" rel="noopener">https://github.com/luyg24/IT_security</a> (一些信息安全标准及设备配置)</li>
+<li><a href="https://github.com/kbandla/APTnotes" target="_blank" rel="noopener">https://github.com/kbandla/APTnotes</a> (APT相关笔记)</li>
+<li><a href="https://github.com/knownsec/KCon" target="_blank" rel="noopener">https://github.com/knownsec/KCon</a> (Kcon资料)</li>
+<li><a href="https://github.com/bt3gl/My-Gray-Hacker-Resources" target="_blank" rel="noopener">https://github.com/bt3gl/My-Gray-Hacker-Resources</a> (周大福及黑客资源合集)</li>
+<li><a href="https://github.com/zardus/ctf-tools" target="_blank" rel="noopener">https://github.com/zardus/ctf-tools</a> (CTF和安全工具大合集)</li>
+<li><a href="https://github.com/citypw/DNFWAH" target="_blank" rel="noopener">https://github.com/citypw/DNFWAH</a> (“不要跟黑客”) </li>
+</ul>
+<h3 id="各类CTF资源"><a href="#各类CTF资源" class="headerlink" title="各类CTF资源"></a>各类CTF资源</h3><p>近年ctf writeup大全</p>
+<ul>
+<li><a href="https://github.com/ctfs/write-ups-2016" target="_blank" rel="noopener">https://github.com/ctfs/write-ups-2016</a></li>
+<li><a href="https://github.com/ctfs/write-ups-2015" target="_blank" rel="noopener">https://github.com/ctfs/write-ups-2015</a></li>
+<li><a href="https://github.com/ctfs/write-ups-2014" target="_blank" rel="noopener">https://github.com/ctfs/write-ups-2014</a></li>
+<li><a href="https://github.com/facebook/fbctf" target="_blank" rel="noopener">https://github.com/facebook/fbctf</a> (fbctf竞赛平台演示)</li>
+<li><a href="https://github.com/ctfs/resources" target="_blank" rel="noopener">https://github.com/ctfs/resources</a> (CTF资源)</li>
+</ul>
+<h3 id="各类编程资源："><a href="#各类编程资源：" class="headerlink" title="各类编程资源："></a>各类编程资源：</h3><ul>
+<li><a href="https://github.com/bayandin/awesome-awesomeness" target="_blank" rel="noopener">https://github.com/bayandin/awesome-awesomeness</a> (大礼包(什么都有))</li>
+<li><a href="https://github.com/denysdovhan/bash-handbook" target="_blank" rel="noopener">https://github.com/denysdovhan/bash-handbook</a> (庆典 - 手册)</li>
+<li><a href="https://github.com/jobbole/awesome-python-cn" target="_blank" rel="noopener">https://github.com/jobbole/awesome-python-cn</a> (蟒蛇资源大全)</li>
+<li><a href="https://github.com/xirong/my-git" target="_blank" rel="noopener">https://github.com/xirong/my-git</a> (Git的的学习资料)</li>
+<li><a href="https://github.com/android-cn/android-open-project-analysis" target="_blank" rel="noopener">https://github.com/android-cn/android-open-project-analysis</a> (安卓开源代码解析)</li>
+<li><a href="https://github.com/vinta/awesome-python" target="_blank" rel="noopener">https://github.com/vinta/awesome-python</a> (蟒蛇框架，库，资源大合集)</li>
+<li><a href="https://github.com/VerbalExpressions/JSVerbalExpressions" target="_blank" rel="noopener">https://github.com/VerbalExpressions/JSVerbalExpressions</a> (JS正则表达式库(用于简化构造复杂的JS正则表达式)) </li>
+</ul>
+<h3 id="蟒蛇："><a href="#蟒蛇：" class="headerlink" title="蟒蛇："></a>蟒蛇：</h3><ul>
+<li><a href="https://github.com/VerbalExpressions/PythonVerbalExpressions" target="_blank" rel="noopener">https://github.com/VerbalExpressions/PythonVerbalExpressions</a> (蟒正则表达式库(用于简化构造复杂的蟒正则表达式))</li>
+<li><a href="https://github.com/pyinvoke/invoke" target="_blank" rel="noopener">https://github.com/pyinvoke/invoke</a> (蟒蛇任务管理以及命令执行库)</li>
+<li><a href="https://github.com/pyinstaller/pyinstaller" target="_blank" rel="noopener">https://github.com/pyinstaller/pyinstaller</a> (python exe打包库)</li>
+<li><a href="https://github.com/orf/cyborg" target="_blank" rel="noopener">https://github.com/orf/cyborg</a> (PY3爬虫框架)</li>
+<li><a href="https://github.com/CoreSecurity/impacket" target="_blank" rel="noopener">https://github.com/CoreSecurity/impacket</a> (一个提供底层接口数据包编程和网络协议支持的蟒蛇库)</li>
+<li><a href="https://github.com/kennethreitz/requests" target="_blank" rel="noopener">https://github.com/kennethreitz/requests</a> (蟒蛇请求库)</li>
+<li><a href="https://github.com/mahmoud/boltons" target="_blank" rel="noopener">https://github.com/mahmoud/boltons</a> (蟒蛇实用工具合集)</li>
+<li><a href="https://github.com/binux/pyspider" target="_blank" rel="noopener">https://github.com/binux/pyspider</a> (蟒蛇爬虫系统)</li>
+<li><a href="https://github.com/P1kachu/v0lt" target="_blank" rel="noopener">https://github.com/P1kachu/v0lt</a> (CTF向蟒蛇工具包) </li>
+</ul>
+<h3 id="科学上网："><a href="#科学上网：" class="headerlink" title="科学上网："></a>科学上网：</h3><ul>
+<li><a href="https://github.com/XX-net/XX-Net" target="_blank" rel="noopener">https://github.com/XX-net/XX-Net</a> (科学上网工具)</li>
+</ul>
+<h3 id="福利："><a href="#福利：" class="headerlink" title="福利："></a>福利：</h3><ul>
+<li><a href="https://github.com/east520/AutoGetRedEnv" target="_blank" rel="noopener">https://github.com/east520/AutoGetRedEnv</a> (微信自动抢红包动态库)</li>
+<li><a href="https://github.com/geeeeeeeeek/WeChatLuckyMoney" target="_blank" rel="noopener">https://github.com/geeeeeeeeek/WeChatLuckyMoney</a> (微信抢红包插件(安卓版))</li>
+<li><a href="https://github.com/yangyangwithgnu/hardseed" target="_blank" rel="noopener">https://github.com/yangyangwithgnu/hardseed</a> (神器)</li>
+</ul>
+<h3 id="甲方安全工程师生存指南："><a href="#甲方安全工程师生存指南：" class="headerlink" title="甲方安全工程师生存指南："></a>甲方安全工程师生存指南：</h3><ul>
+<li><a href="https://github.com/thomaspatzke/WASE" target="_blank" rel="noopener">https://github.com/thomaspatzke/WASE</a> (网页索引及日志搜索工具)</li>
+<li><a href="https://github.com/Kozea/wdb" target="_blank" rel="noopener">https://github.com/Kozea/wdb</a> (一款CS结构的网络调试器)</li>
+<li><a href="https://github.com/aramosf/recoversqlite/" target="_blank" rel="noopener">https://github.com/aramosf/recoversqlite/</a> (从sqlite的数据库中删除的注册表恢复信息。)</li>
+<li><a href="https://github.com/epinna/tplmap" target="_blank" rel="noopener">https://github.com/epinna/tplmap</a> (自动化的模板注入攻击检测工具)</li>
+<li><a href="https://github.com/client9/libinjection" target="_blank" rel="noopener">https://github.com/client9/libinjection</a> (SQLI词法解析分析器)</li>
+<li><a href="https://github.com/zxsecurity/gpsnitch" target="_blank" rel="noopener">https://github.com/zxsecurity/gpsnitch</a> (全球定位系统欺骗检测工具)</li>
+<li><a href="https://github.com/biggiesmallsAG/nightHawkResponse" target="_blank" rel="noopener">https://github.com/biggiesmallsAG/nightHawkResponse</a> (应急处置响应框架)</li>
+<li><a href="https://github.com/FallibleInc/security-guide-for-developers" target="_blank" rel="noopener">https://github.com/FallibleInc/security-guide-for-developers</a> (网络安全开发指南)</li>
+<li><a href="https://github.com/4ido10n/wooyun-drops-all-articles-package" target="_blank" rel="noopener">https://github.com/4ido10n/wooyun-drops-all-articles-package</a> (乌云知识库全部文章)</li>
+<li><a href="https://github.com/paralax/awesome-honeypots" target="_blank" rel="noopener">https://github.com/paralax/awesome-honeypots</a> (蜜罐资源合集)</li>
+<li><a href="https://github.com/wufeifei/cobra" target="_blank" rel="noopener">https://github.com/wufeifei/cobra</a> (自动化代码审计工具)</li>
+<li><a href="https://github.com/HatBoy/Pcap-Analyzer" target="_blank" rel="noopener">https://github.com/HatBoy/Pcap-Analyzer</a> (蟒蛇编写的离线网络数据包分析器)</li>
+<li><a href="https://github.com/leonteale/pentestpackage" target="_blank" rel="noopener">https://github.com/leonteale/pentestpackage</a> (渗透测试常见小工具打包)</li>
+<li><a href="https://github.com/phith0n/Mind-Map" target="_blank" rel="noopener">https://github.com/phith0n/Mind-Map</a> (各类安全资料：)</li>
+<li><a href="https://github.com/SecWiki/sec-chart/tree/294d7c1ff1eba297fa892dda08f3c05e90ed1428" target="_blank" rel="noopener">https://github.com/SecWiki/sec-chart/tree/294d7c1ff1eba297fa892dda08f3c05e90ed1428</a> (安全脑图合集 )</li>
+</ul>
+<h3 id="有关信息安全的一些流程图收集"><a href="#有关信息安全的一些流程图收集" class="headerlink" title="有关信息安全的一些流程图收集"></a>有关信息安全的一些流程图收集</h3><ul>
+<li><a href="https://github.com/sindresorhus/awesome#security" target="_blank" rel="noopener">https://github.com/sindresorhus/awesome#security</a> (令人敬畏的名单)</li>
+</ul>
+<h3 id="蜜罐："><a href="#蜜罐：" class="headerlink" title="蜜罐："></a>蜜罐：</h3><ul>
+<li><a href="https://github.com/desaster/kippo" target="_blank" rel="noopener">https://github.com/desaster/kippo</a> (SSH蜜罐)</li>
+<li><a href="https://github.com/awhitehatter/mailoney" target="_blank" rel="noopener">https://github.com/awhitehatter/mailoney</a> (SMTP蜜罐)</li>
+<li><a href="https://github.com/mushorg/glastopf" target="_blank" rel="noopener">https://github.com/mushorg/glastopf</a> (网络应用蜜罐)</li>
+<li><a href="https://github.com/jordan-wright/elastichoney" target="_blank" rel="noopener">https://github.com/jordan-wright/elastichoney</a> (一个简单的Elasticsearch蜜罐)</li>
+<li><a href="https://github.com/atiger77/Dionaea" target="_blank" rel="noopener">https://github.com/atiger77/Dionaea</a> (基于docker的蜜罐系统) </li>
+</ul>
+<blockquote>
+<p>Scanners-Box是来自github平台的开源扫描仪的集合，包括子域枚举，数据库漏洞扫描程序，弱密码或信息泄漏扫描仪，端口扫描仪，指纹扫描仪和其他大型扫描仪，模块化扫描仪等。对于其他众所周知的扫描工具，如：Nmap，w3af，brakeman将不会包含在收集范围内。安全行业从业人员常用工具指引，包括各类在线安全学习资料和安全检测工具，欢迎大家持续贡献！</p>
+</blockquote>
+<h3 id="入门指南"><a href="#入门指南" class="headerlink" title="入门指南"></a>入门指南</h3><ul>
+<li><a href="https://wizardforcel.gitbooks.io/web-hacking-101/content/" target="_blank" rel="noopener">https://wizardforcel.gitbooks.io/web-hacking-101/content/</a> (Web Hacking 101 中文版)</li>
+<li><a href="https://wizardforcel.gitbooks.io/asani/content/" target="_blank" rel="noopener">https://wizardforcel.gitbooks.io/asani/content/</a> (浅入浅出Android安全 中文版)</li>
+<li><a href="https://wizardforcel.gitbooks.io/lpad/content/" target="_blank" rel="noopener">https://wizardforcel.gitbooks.io/lpad/content/</a> (Android 渗透测试学习手册 中文版)</li>
+<li><a href="https://wizardforcel.gitbooks.io/kali-linux-web-pentest-cookbook/content/" target="_blank" rel="noopener">https://wizardforcel.gitbooks.io/kali-linux-web-pentest-cookbook/content/</a> (Kali Linux Web渗透测试秘籍 中文版)</li>
+<li><a href="https://github.com/hardenedlinux/linux-exploit-development-tutorial" target="_blank" rel="noopener">https://github.com/hardenedlinux/linux-exploit-development-tutorial</a> (Linux exploit 开发入门)</li>
+<li><a href="https://www.gitbook.com/book/t0data/burpsuite/details" target="_blank" rel="noopener">https://www.gitbook.com/book/t0data/burpsuite/details</a> (burpsuite实战指南)</li>
+<li><a href="https://github.com/qazbnm456/awesome-web-security" target="_blank" rel="noopener">https://github.com/qazbnm456/awesome-web-security</a> (Web安全资料和资源列表)</li>
+<li><a href="https://sec-wiki.com/" target="_blank" rel="noopener">https://sec-wiki.com/</a> (安全维基百科)</li>
+</ul>
+<h3 id="fuzz工具收集"><a href="#fuzz工具收集" class="headerlink" title="fuzz工具收集"></a>fuzz工具收集</h3><ul>
+<li><a href="https://github.com/ivanfratric/winafl" target="_blank" rel="noopener">https://github.com/ivanfratric/winafl</a></li>
+<li><a href="https://github.com/attekett/NodeFuzz" target="_blank" rel="noopener">https://github.com/attekett/NodeFuzz</a></li>
+<li><a href="https://github.com/google/oss-fuzz" target="_blank" rel="noopener">https://github.com/google/oss-fuzz</a></li>
+<li><a href="http://blog.topsec.com.cn/ad_lab/alphafuzzer/" target="_blank" rel="noopener">http://blog.topsec.com.cn/ad_lab/alphafuzzer/</a></li>
+<li><a href="http://llvm.org/docs/LibFuzzer.html" target="_blank" rel="noopener">http://llvm.org/docs/LibFuzzer.html</a></li>
+</ul>
+<h3 id="子域名枚举"><a href="#子域名枚举" class="headerlink" title="子域名枚举"></a>子域名枚举</h3><ul>
+<li><a href="https://github.com/ring04h/wydomain" target="_blank" rel="noopener">https://github.com/ring04h/wydomain</a> (子域名字典穷举)</li>
+<li><a href="https://github.com/le4f/dnsmaper" target="_blank" rel="noopener">https://github.com/le4f/dnsmaper</a> (子域名枚举与地图标记)</li>
+<li><a href="https://github.com/0xbug/orangescan" target="_blank" rel="noopener">https://github.com/0xbug/orangescan</a> (在线子域名信息收集工具)</li>
+<li><a href="https://github.com/TheRook/subbrute" target="_blank" rel="noopener">https://github.com/TheRook/subbrute</a> (根据DNS记录查询子域名)</li>
+<li><a href="https://github.com/We5ter/GSDF" target="_blank" rel="noopener">https://github.com/We5ter/GSDF</a> (基于谷歌SSL透明证书的子域名查询脚本)</li>
+<li><a href="https://github.com/mandatoryprogrammer/cloudflare_enum" target="_blank" rel="noopener">https://github.com/mandatoryprogrammer/cloudflare_enum</a> (使用CloudFlare进行子域名枚举的脚本)</li>
+<li><a href="https://github.com/18F/domain-scan" target="_blank" rel="noopener">https://github.com/18F/domain-scan</a> (A domain scanner)</li>
+<li><a href="https://github.com/guelfoweb/knock" target="_blank" rel="noopener">https://github.com/guelfoweb/knock</a> (Knock Subdomain Scan)</li>
+<li><a href="https://github.com/Evi1CLAY/CoolPool/tree/master/Python/DomainSeeker" target="_blank" rel="noopener">https://github.com/Evi1CLAY/CoolPool/tree/master/Python/DomainSeeker</a> (多方式收集目标子域名信息)</li>
+<li><a href="https://github.com/code-scan/BroDomain" target="_blank" rel="noopener">https://github.com/code-scan/BroDomain</a> (兄弟域名查询)</li>
+<li><a href="https://github.com/chuhades/dnsbrute" target="_blank" rel="noopener">https://github.com/chuhades/dnsbrute</a> (基于dns查询的子域名枚举)</li>
+</ul>
+<h3 id="web应用扫描器"><a href="#web应用扫描器" class="headerlink" title="web应用扫描器"></a>web应用扫描器</h3><ul>
+<li><a href="http://github.com/Arachni/arachni" target="_blank" rel="noopener">http://github.com/Arachni/arachni</a> (web应用安全扫描器框架 <a href="http://www.arachni-scanner.com" target="_blank" rel="noopener">http://www.arachni-scanner.com</a>)</li>
+</ul>
+<h3 id="数据库扫描、注入工具"><a href="#数据库扫描、注入工具" class="headerlink" title="数据库扫描、注入工具"></a>数据库扫描、注入工具</h3><ul>
+<li><a href="https://github.com/sqlmapproject/sqlmap" target="_blank" rel="noopener">https://github.com/sqlmapproject/sqlmap</a> (注入工具之王sqlmap)</li>
+<li><a href="https://github.com/0xbug/SQLiScanner" target="_blank" rel="noopener">https://github.com/0xbug/SQLiScanner</a> (一款基于SQLMAP和Charles的被动SQL注入漏洞扫描工具)</li>
+<li><a href="https://github.com/stamparm/DSSS" target="_blank" rel="noopener">https://github.com/stamparm/DSSS</a> (99行代码实现的sql注入漏洞扫描器)</li>
+<li><a href="https://github.com/youngyangyang04/NoSQLAttack" target="_blank" rel="noopener">https://github.com/youngyangyang04/NoSQLAttack</a> (一款针对mongoDB的攻击工具)</li>
+<li><a href="https://github.com/Neohapsis/bbqsql" target="_blank" rel="noopener">https://github.com/Neohapsis/bbqsql</a> (SQL盲注利用框架)</li>
+<li><a href="https://github.com/NetSPI/PowerUpSQL" target="_blank" rel="noopener">https://github.com/NetSPI/PowerUpSQL</a> (攻击SQLSERVER的Powershell脚本框架)</li>
+<li><a href="https://github.com/WhitewidowScanner/whitewidow" target="_blank" rel="noopener">https://github.com/WhitewidowScanner/whitewidow</a> (又一款数据库扫描器)</li>
+<li><a href="https://github.com/stampery/mongoaudit" target="_blank" rel="noopener">https://github.com/stampery/mongoaudit</a> (MongoDB审计及渗透工具)</li>
+<li><a href="https://github.com/commixproject/commix" target="_blank" rel="noopener">https://github.com/commixproject/commix</a> (注入点命令执行利用工具)</li>
+</ul>
+<h3 id="弱口令或信息泄漏扫描"><a href="#弱口令或信息泄漏扫描" class="headerlink" title="弱口令或信息泄漏扫描"></a>弱口令或信息泄漏扫描</h3><ul>
+<li><a href="https://github.com/lijiejie/htpwdScan" target="_blank" rel="noopener">https://github.com/lijiejie/htpwdScan</a> (一个简单的HTTP暴力破解、撞库攻击脚本)</li>
+<li><a href="https://github.com/lijiejie/BBScan" target="_blank" rel="noopener">https://github.com/lijiejie/BBScan</a> (一个迷你的信息泄漏批量扫描脚本)</li>
+<li><a href="https://github.com/lijiejie/GitHack" target="_blank" rel="noopener">https://github.com/lijiejie/GitHack</a> (.git文件夹泄漏利用工具)</li>
+<li><a href="https://github.com/LoRexxar/BScanner" target="_blank" rel="noopener">https://github.com/LoRexxar/BScanner</a> (基于字典的目录扫描小工具)</li>
+<li><a href="https://github.com/she11c0der/fenghuangscanner_v3" target="_blank" rel="noopener">https://github.com/she11c0der/fenghuangscanner_v3</a> (各种端口及弱口令检测，作者wilson9x1，原地址失效)</li>
+<li><a href="https://github.com/ysrc/F-Scrack" target="_blank" rel="noopener">https://github.com/ysrc/F-Scrack</a> (对各类服务进行弱口令检测的脚本)</li>
+<li><a href="https://github.com/Mebus/cupp" target="_blank" rel="noopener">https://github.com/Mebus/cupp</a> (根据用户习惯生成弱口令探测字典脚本)</li>
+<li><a href="https://github.com/RicterZ/genpAss" target="_blank" rel="noopener">https://github.com/RicterZ/genpAss</a> (中国特色的弱口令生成器)</li>
+<li><a href="https://github.com/netxfly/crack_ssh" target="_blank" rel="noopener">https://github.com/netxfly/crack_ssh</a> (go写的协程版的ssh\redis\mongodb弱口令破解工具)</li>
+<li><a href="https://github.com/n0tr00t/Sreg" target="_blank" rel="noopener">https://github.com/n0tr00t/Sreg</a> (通过输入email、phone、username的返回用户注册的所有互联网护照信息)</li>
+<li><a href="https://github.com/repoog/GitPrey" target="_blank" rel="noopener">https://github.com/repoog/GitPrey</a> (GitHub敏感信息扫描工具)</li>
+<li><a href="https://github.com/dxa4481/truffleHog" target="_blank" rel="noopener">https://github.com/dxa4481/truffleHog</a> (GitHub敏感信息扫描工具,包括检测commit等)</li>
+<li><a href="https://github.com/LandGrey/pydictor" target="_blank" rel="noopener">https://github.com/LandGrey/pydictor</a> (暴力破解字典建立工具)</li>
+<li><a href="https://github.com/GDSSecurity/xxe-recursive-download" target="_blank" rel="noopener">https://github.com/GDSSecurity/xxe-recursive-download</a> (xxe漏洞递归下载工具)</li>
+<li><a href="https://buer.haus/xxegen/" target="_blank" rel="noopener">https://buer.haus/xxegen/</a> (xxe在线生成利用工具)</li>
+</ul>
+<h3 id="物联网设备扫描"><a href="#物联网设备扫描" class="headerlink" title="物联网设备扫描"></a>物联网设备扫描</h3><ul>
+<li><a href="https://github.com/rapid7/IoTSeeker" target="_blank" rel="noopener">https://github.com/rapid7/IoTSeeker</a> (物联网设备默认密码扫描检测工具)</li>
+<li><a href="https://github.com/shodan-labs/iotdb" target="_blank" rel="noopener">https://github.com/shodan-labs/iotdb</a> (使用nmap扫描IoT设备)</li>
+<li><a href="https://github.com/jh00nbr/Routerhunter-2.0" target="_blank" rel="noopener">https://github.com/jh00nbr/Routerhunter-2.0</a> (路由器漏洞扫描利用)</li>
+<li><a href="https://github.com/reverse-shell/routersploit" target="_blank" rel="noopener">https://github.com/reverse-shell/routersploit</a> (路由器漏洞利用框架)</li>
+<li><a href="https://github.com/scu-igroup/telnet-scanner" target="_blank" rel="noopener">https://github.com/scu-igroup/telnet-scanner</a> (telnet服务密码撞库)</li>
+<li><a href="https://github.com/RUB-NDS/PRET" target="_blank" rel="noopener">https://github.com/RUB-NDS/PRET</a> (打印机攻击框架)</li>
+</ul>
+<h3 id="XSS扫描"><a href="#XSS扫描" class="headerlink" title="XSS扫描"></a>XSS扫描</h3><ul>
+<li><a href="https://github.com/shawarkhanethicalhacker/BruteXSS" target="_blank" rel="noopener">https://github.com/shawarkhanethicalhacker/BruteXSS</a> (Cross-Site Scripting Bruteforcer)</li>
+<li><a href="https://github.com/1N3/XSSTracer" target="_blank" rel="noopener">https://github.com/1N3/XSSTracer</a> (A small python script to check for Cross-Site Tracing)</li>
+<li><a href="https://github.com/0x584A/fuzzXssPHP" target="_blank" rel="noopener">https://github.com/0x584A/fuzzXssPHP</a> (PHP版本的反射型xss扫描)</li>
+<li><a href="https://github.com/chuhades/xss_scan" target="_blank" rel="noopener">https://github.com/chuhades/xss_scan</a> (批量扫描xss的python脚本)</li>
+<li><a href="https://github.com/BlackHole1/autoFindXssAndCsrf" target="_blank" rel="noopener">https://github.com/BlackHole1/autoFindXssAndCsrf</a> (自动化检测页面是否存在XSS和CSRF漏洞的浏览器插件)</li>
+</ul>
+<h3 id="企业网络自检"><a href="#企业网络自检" class="headerlink" title="企业网络自检"></a>企业网络自检</h3><ul>
+<li><a href="https://github.com/sowish/LNScan" target="_blank" rel="noopener">https://github.com/sowish/LNScan</a> (详细的内部网络信息扫描器)</li>
+<li><a href="https://github.com/SkyLined/LocalNetworkScanner" target="_blank" rel="noopener">https://github.com/SkyLined/LocalNetworkScanner</a> (javascript实现的本地网络扫描器)</li>
+<li><a href="https://github.com/ysrc/xunfeng" target="_blank" rel="noopener">https://github.com/ysrc/xunfeng</a> (网络资产识别引擎，漏洞检测引擎)</li>
+<li><a href="https://github.com/laramies/theHarvester" target="_blank" rel="noopener">https://github.com/laramies/theHarvester</a> (企业被搜索引擎收录敏感资产信息监控脚本：员工邮箱、子域名、Hosts)</li>
+<li><a href="https://github.com/x0day/Multisearch-v2" target="_blank" rel="noopener">https://github.com/x0day/Multisearch-v2</a> (搜索引擎聚合搜索，可用于发现企业被搜索引擎收录的敏感资产信息)</li>
+</ul>
+<h3 id="webshell检测以及病毒分析工具"><a href="#webshell检测以及病毒分析工具" class="headerlink" title="webshell检测以及病毒分析工具"></a>webshell检测以及病毒分析工具</h3><ul>
+<li><a href="https://github.com/We5ter/Scanners-Box/tree/master/webshell/" target="_blank" rel="noopener">https://github.com/We5ter/Scanners-Box/tree/master/webshell/</a> (简单的php后门检测工具以及webshell样本库)</li>
+<li><a href="https://github.com/ym2011/ScanBackdoor" target="_blank" rel="noopener">https://github.com/ym2011/ScanBackdoor</a> (Webshell扫描工具)</li>
+<li><a href="https://github.com/yassineaddi/BackdoorMan" target="_blank" rel="noopener">https://github.com/yassineaddi/BackdoorMan</a> (PHP后门扫描)</li>
+<li><a href="https://github.com/he1m4n6a/findWebshell" target="_blank" rel="noopener">https://github.com/he1m4n6a/findWebshell</a> (又一款webshell检测工具)</li>
+<li><a href="https://github.com/Tencent/HaboMalHunter" target="_blank" rel="noopener">https://github.com/Tencent/HaboMalHunter</a> (哈勃分析系统，linux系统病毒分析及安全检测)</li>
+<li><a href="https://github.com/PlagueScanner/PlagueScanner" target="_blank" rel="noopener">https://github.com/PlagueScanner/PlagueScanner</a> (使用python实现的集成ClamAV、ESET、Bitdefender的反病毒引擎)</li>
+<li><a href="https://github.com/nbs-system/php-malware-finder" target="_blank" rel="noopener">https://github.com/nbs-system/php-malware-finder</a> (一款高效率PHP-webshell扫描工具)</li>
+<li><a href="https://github.com/emposha/PHP-Shell-Detector/" target="_blank" rel="noopener">https://github.com/emposha/PHP-Shell-Detector/</a> (测试效率高达99%的webshell检测工具)</li>
+</ul>
+<h3 id="内网安全渗透测试工具集"><a href="#内网安全渗透测试工具集" class="headerlink" title="内网安全渗透测试工具集"></a>内网安全渗透测试工具集</h3><ul>
+<li><a href="https://github.com/0xwindows/VulScritp" target="_blank" rel="noopener">https://github.com/0xwindows/VulScritp</a> (企业内网渗透脚本，包括banner扫描、端口扫描；各种通用漏洞利用等)</li>
+<li><a href="https://github.com/lcatro/network_backdoor_scanner" target="_blank" rel="noopener">https://github.com/lcatro/network_backdoor_scanner</a> (基于网络流量的内网探测框架)</li>
+<li><a href="https://github.com/fdiskyou/hunter" target="_blank" rel="noopener">https://github.com/fdiskyou/hunter</a> (调用 Windows API 枚举用户登录信息)</li>
+<li><a href="https://github.com/BlackHole1/WebRtcXSS" target="_blank" rel="noopener">https://github.com/BlackHole1/WebRtcXSS</a> (自动化利用XSS入侵内网)</li>
+<li><a href="https://github.com/AlessandroZ/LaZagne" target="_blank" rel="noopener">https://github.com/AlessandroZ/LaZagne</a> (本机密码查看提取工具)</li>
+<li><a href="https://github.com/huntergregal/mimipenguin" target="_blank" rel="noopener">https://github.com/huntergregal/mimipenguin</a> (linux密码抓取神器)</li>
+</ul>
+<h3 id="端口扫描、指纹识别以及中间件扫描"><a href="#端口扫描、指纹识别以及中间件扫描" class="headerlink" title="端口扫描、指纹识别以及中间件扫描"></a>端口扫描、指纹识别以及中间件扫描</h3><ul>
+<li><a href="https://nmap.org/download.html" target="_blank" rel="noopener">https://nmap.org/download.html</a> (Nmap端口扫描器之王,<a href="https://svn.nmap.org/" target="_blank" rel="noopener">https://svn.nmap.org/</a>)</li>
+<li><a href="https://github.com/ring04h/wyportmap" target="_blank" rel="noopener">https://github.com/ring04h/wyportmap</a> (目标端口扫描+系统服务指纹识别)</li>
+<li><a href="https://github.com/ring04h/weakfilescan" target="_blank" rel="noopener">https://github.com/ring04h/weakfilescan</a> (动态多线程敏感信息泄露检测工具)</li>
+<li><a href="https://github.com/EnableSecurity/wafw00f" target="_blank" rel="noopener">https://github.com/EnableSecurity/wafw00f</a> (WAF产品指纹识别)</li>
+<li><a href="https://github.com/rbsec/sslscan" target="_blank" rel="noopener">https://github.com/rbsec/sslscan</a> (ssl类型识别)</li>
+<li><a href="https://github.com/urbanadventurer/whatweb" target="_blank" rel="noopener">https://github.com/urbanadventurer/whatweb</a> (web指纹识别)</li>
+<li><a href="https://github.com/tanjiti/FingerPrint" target="_blank" rel="noopener">https://github.com/tanjiti/FingerPrint</a> (web应用指纹识别)</li>
+<li><a href="https://github.com/nanshihui/Scan-T" target="_blank" rel="noopener">https://github.com/nanshihui/Scan-T</a> (网络爬虫式指纹识别)</li>
+<li><a href="https://github.com/OffensivePython/Nscan" target="_blank" rel="noopener">https://github.com/OffensivePython/Nscan</a> (a fast Network scanner inspired by Masscan and Zmap)</li>
+<li><a href="https://github.com/ywolf/F-NAScan" target="_blank" rel="noopener">https://github.com/ywolf/F-NAScan</a> (网络资产信息扫描, ICMP存活探测,端口扫描，端口指纹服务识别)</li>
+<li><a href="https://github.com/ywolf/F-MiddlewareScan" target="_blank" rel="noopener">https://github.com/ywolf/F-MiddlewareScan</a> (中间件扫描)</li>
+<li><a href="https://github.com/maurosoria/dirsearch" target="_blank" rel="noopener">https://github.com/maurosoria/dirsearch</a> (Web path scanner)</li>
+<li><a href="https://github.com/x0day/bannerscan" target="_blank" rel="noopener">https://github.com/x0day/bannerscan</a> (C段Banner与路径扫描)</li>
+<li><a href="https://github.com/RASSec/RASscan" target="_blank" rel="noopener">https://github.com/RASSec/RASscan</a> (端口服务扫描)</li>
+<li><a href="https://github.com/3xp10it/bypass_waf" target="_blank" rel="noopener">https://github.com/3xp10it/bypass_waf</a> (waf自动暴破)</li>
+<li><a href="https://github.com/3xp10it/xcdn" target="_blank" rel="noopener">https://github.com/3xp10it/xcdn</a> (尝试找出cdn背后的真实ip)</li>
+<li><a href="https://github.com/Xyntax/BingC" target="_blank" rel="noopener">https://github.com/Xyntax/BingC</a> (基于Bing搜索引擎的C段/旁站查询，多线程，支持API)</li>
+<li><a href="https://github.com/Xyntax/DirBrute" target="_blank" rel="noopener">https://github.com/Xyntax/DirBrute</a> (多线程WEB目录爆破工具)</li>
+<li><a href="https://github.com/zer0h/httpscan" target="_blank" rel="noopener">https://github.com/zer0h/httpscan</a> (一个爬虫式的网段Web主机发现小工具)</li>
+<li><a href="https://github.com/lietdai/doom" target="_blank" rel="noopener">https://github.com/lietdai/doom</a> (thorn上实现的分布式任务分发的ip端口漏洞扫描器)</li>
+<li><a href="https://github.com/chichou/grab.js" target="_blank" rel="noopener">https://github.com/chichou/grab.js</a> (类似 zgrab 的快速 TCP 指纹抓取解析工具，支持更多协议)</li>
+<li><a href="https://github.com/Nitr4x/whichCDN" target="_blank" rel="noopener">https://github.com/Nitr4x/whichCDN</a> (CDN识别、检测)</li>
+<li><a href="https://github.com/secfree/bcrpscan" target="_blank" rel="noopener">https://github.com/secfree/bcrpscan</a> (基于爬虫的web路径扫描器)</li>
+</ul>
+<h3 id="针对性漏洞测试工具"><a href="#针对性漏洞测试工具" class="headerlink" title="针对性漏洞测试工具"></a>针对性漏洞测试工具</h3><ul>
+<li><a href="https://github.com/frohoff/ysoserial" target="_blank" rel="noopener">https://github.com/frohoff/ysoserial</a> ( java反序列化利用工具)</li>
+<li><a href="https://github.com/blackye/Jenkins" target="_blank" rel="noopener">https://github.com/blackye/Jenkins</a> (Jenkins漏洞探测、用户抓取爆破)</li>
+<li><a href="https://github.com/code-scan/dzscan" target="_blank" rel="noopener">https://github.com/code-scan/dzscan</a> (discuz漏洞扫描)</li>
+<li><a href="https://github.com/chuhades/CMS-Exploit-Framework" target="_blank" rel="noopener">https://github.com/chuhades/CMS-Exploit-Framework</a> (CMS攻击框架)</li>
+<li><a href="https://github.com/lijiejie/IIS_shortname_Scanner" target="_blank" rel="noopener">https://github.com/lijiejie/IIS_shortname_Scanner</a> (IIS短文件名漏洞扫描)</li>
+<li><a href="https://github.com/riusksk/FlashScanner" target="_blank" rel="noopener">https://github.com/riusksk/FlashScanner</a> (flashxss扫描)</li>
+<li><a href="https://github.com/coffeehb/SSTIF" target="_blank" rel="noopener">https://github.com/coffeehb/SSTIF</a> (服务器端模板注入漏洞的半自动化工具)</li>
+<li><a href="https://github.com/epinna/tplmap" target="_blank" rel="noopener">https://github.com/epinna/tplmap</a> (服务器端模板注入漏洞检测与利用工具)</li>
+<li><a href="https://github.com/cr0hn/dockerscan" target="_blank" rel="noopener">https://github.com/cr0hn/dockerscan</a> (docker扫描工具)</li>
+<li><a href="https://github.com/GoSecure/break-fast-serial" target="_blank" rel="noopener">https://github.com/GoSecure/break-fast-serial</a> (借助DNS解析来检测Java反序列化漏洞工具)</li>
+<li><a href="https://github.com/dirtycow/dirtycow.github.io" target="_blank" rel="noopener">https://github.com/dirtycow/dirtycow.github.io</a> (脏牛提权漏洞exp)</li>
+</ul>
+<h3 id="无线网络渗透、扫描"><a href="#无线网络渗透、扫描" class="headerlink" title="无线网络渗透、扫描"></a>无线网络渗透、扫描</h3><ul>
+<li><a href="https://github.com/savio-code/fern-wifi-cracker/" target="_blank" rel="noopener">https://github.com/savio-code/fern-wifi-cracker/</a>(无线安全审计工具)</li>
+<li><a href="https://github.com/m4n3dw0lf/PytheM" target="_blank" rel="noopener">https://github.com/m4n3dw0lf/PytheM</a> (Python网络/渗透测试工具)</li>
+<li><a href="https://github.com/P0cL4bs/WiFi-Pumpkin" target="_blank" rel="noopener">https://github.com/P0cL4bs/WiFi-Pumpkin</a> (无线安全渗透测试套件)</li>
+</ul>
+<h3 id="代码静态扫描、代码运行栈跟踪"><a href="#代码静态扫描、代码运行栈跟踪" class="headerlink" title="代码静态扫描、代码运行栈跟踪"></a>代码静态扫描、代码运行栈跟踪</h3><ul>
+<li><a href="https://github.com/exakat/php-static-analysis-tools" target="_blank" rel="noopener">https://github.com/exakat/php-static-analysis-tools</a> (php静态扫描工具集)</li>
+<li><a href="https://github.com/wufeifei/cobra" target="_blank" rel="noopener">https://github.com/wufeifei/cobra</a> (白盒代码安全审计系统)</li>
+<li><a href="https://github.com/OneSourceCat/phpvulhunter" target="_blank" rel="noopener">https://github.com/OneSourceCat/phpvulhunter</a> (静态php代码审计)</li>
+<li><a href="https://github.com/Qihoo360/phptrace" target="_blank" rel="noopener">https://github.com/Qihoo360/phptrace</a> (跟踪、分析PHP运行情况的工具)</li>
+<li><a href="https://github.com/ajinabraham/NodeJsScan" target="_blank" rel="noopener">https://github.com/ajinabraham/NodeJsScan</a> (NodeJS应用代码审计)</li>
+<li><a href="https://github.com/pwnsdx/BadCode" target="_blank" rel="noopener">https://github.com/pwnsdx/BadCode</a> (PHP代码审计)</li>
+<li><a href="https://github.com/thesp0nge/dawnscanner" target="_blank" rel="noopener">https://github.com/thesp0nge/dawnscanner</a> (ruby源码审计)</li>
+<li><a href="https://github.com/presidentbeef/brakeman" target="_blank" rel="noopener">https://github.com/presidentbeef/brakeman</a> (Ruby on Rails应用程序的安全漏洞)</li>
+<li><a href="https://github.com/ajinabraham/Mobile-Security-Framework-MobSF/" target="_blank" rel="noopener">https://github.com/ajinabraham/Mobile-Security-Framework-MobSF/</a>(app黑盒审计)</li>
+<li><a href="https://github.com/alibaba/iOSSecAudit" target="_blank" rel="noopener">https://github.com/alibaba/iOSSecAudit</a> (iOS安全审计)</li>
+</ul>
+<h3 id="模块化扫描、综合扫描器"><a href="#模块化扫描、综合扫描器" class="headerlink" title="模块化扫描、综合扫描器"></a>模块化扫描、综合扫描器</h3><ul>
+<li><a href="https://github.com/az0ne/AZScanner" target="_blank" rel="noopener">https://github.com/az0ne/AZScanner</a> (自动漏洞扫描器，子域名爆破，端口扫描，目录爆破，常用框架漏洞检测)</li>
+<li><a href="https://github.com/blackye/lalascan" target="_blank" rel="noopener">https://github.com/blackye/lalascan</a> (分布式web漏洞扫描框架，集合owasp top10漏洞扫描和边界资产发现能力)</li>
+<li><a href="https://github.com/blackye/BkScanner" target="_blank" rel="noopener">https://github.com/blackye/BkScanner</a> (BkScanner 分布式、插件化web漏洞扫描器)</li>
+<li><a href="https://github.com/ysrc/GourdScanV2" target="_blank" rel="noopener">https://github.com/ysrc/GourdScanV2</a> (被动式漏洞扫描)</li>
+<li><a href="https://github.com/alpha1e0/pentestdb" target="_blank" rel="noopener">https://github.com/alpha1e0/pentestdb</a> (WEB渗透测试数据库)</li>
+<li><a href="https://github.com/netxfly/passive_scan" target="_blank" rel="noopener">https://github.com/netxfly/passive_scan</a> (基于http代理的web漏洞扫描器)</li>
+<li><a href="https://github.com/1N3/Sn1per" target="_blank" rel="noopener">https://github.com/1N3/Sn1per</a> (自动化扫描器，包括中间件扫描以及设备指纹识别)</li>
+<li><a href="https://github.com/RASSec/pentestEr_Fully-automatic-scanner" target="_blank" rel="noopener">https://github.com/RASSec/pentestEr_Fully-automatic-scanner</a> (定向全自动化渗透测试工具)</li>
+<li><a href="https://github.com/3xp10it/3xp10it" target="_blank" rel="noopener">https://github.com/3xp10it/3xp10it</a> (自动化渗透测试框架)</li>
+<li><a href="https://github.com/Lcys/lcyscan" target="_blank" rel="noopener">https://github.com/Lcys/lcyscan</a> (扫描效果未验证)</li>
+<li><a href="https://github.com/Xyntax/POC-T" target="_blank" rel="noopener">https://github.com/Xyntax/POC-T</a> (渗透测试插件化并发框架)</li>
+<li><a href="https://github.com/v3n0m-Scanner/V3n0M-Scanner" target="_blank" rel="noopener">https://github.com/v3n0m-Scanner/V3n0M-Scanner</a> (Scanner in Python3.5 for SQLi/XSS/LFI/RFI and other Vulns)</li>
+<li><a href="https://github.com/Skycrab/leakScan" target="_blank" rel="noopener">https://github.com/Skycrab/leakScan</a> (web端的在线漏洞扫描)</li>
+<li><a href="https://github.com/zhangzhenfeng/AnyScan" target="_blank" rel="noopener">https://github.com/zhangzhenfeng/AnyScan</a> (开发中…)</li>
+</ul>
+<h3 id="Android系列工具："><a href="#Android系列工具：" class="headerlink" title="Android系列工具："></a>Android系列工具：</h3><ul>
+<li><a href="http://sec-redclub.com/index.php/archives/439/" target="_blank" rel="noopener">http://sec-redclub.com/index.php/archives/439/</a></li>
+</ul>
+<h3 id="DDOS防护："><a href="#DDOS防护：" class="headerlink" title="DDOS防护："></a>DDOS防护：</h3><ul>
+<li><a href="https://github.com/ywjt/Dshield" target="_blank" rel="noopener">https://github.com/ywjt/Dshield</a></li>
+</ul>
+<h3 id="Database-firewall："><a href="#Database-firewall：" class="headerlink" title="Database firewall："></a>Database firewall：</h3><ul>
+<li><a href="https://nim4.github.io/DBShield/" target="_blank" rel="noopener">https://nim4.github.io/DBShield/</a></li>
+</ul>
+<h3 id="waf开源及规则："><a href="#waf开源及规则：" class="headerlink" title="waf开源及规则："></a>waf开源及规则：</h3><ul>
+<li><a href="https://github.com/xsec-lab/x-waf" target="_blank" rel="noopener">https://github.com/xsec-lab/x-waf</a></li>
+<li><a href="https://github.com/loveshell/ngx_lua_waf" target="_blank" rel="noopener">https://github.com/loveshell/ngx_lua_waf</a></li>
+<li><a href="https://github.com/SpiderLabs/owasp-modsecurity-crs/tree/master/base_rules" target="_blank" rel="noopener">https://github.com/SpiderLabs/owasp-modsecurity-crs/tree/master/base_rules</a></li>
+</ul>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yulongphp.github.io/2018/08/24/hack_tools_assm/" data-id="cjs4ec1a30013x98yoamw8542" class="article-share-link">分享到</a><div class="tags"><a href="/tags/hack/">hack</a></div><div class="post-nav"><a href="/2018/10/24/docker学习笔记/" class="pre">docker学习笔记</a><a href="/2018/07/24/github_hack_tool/" class="next">2019年Github上开源的安全渗透攻击类工具集合</a></div><div id="disqus_thread"><script>var disqus_shortname = 'yulong';
+var disqus_identifier = '2018/08/24/hack_tools_assm/';
+var disqus_title = 'Github上开源的安全渗透攻击类工具集合';
+var disqus_url = 'http://yulongphp.github.io/2018/08/24/hack_tools_assm/';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//yulong.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yulongphp.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/debian/">debian</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sublime/">sublime</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/日志/">日志</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/tcl/" style="font-size: 15px;">tcl</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/list/" style="font-size: 15px;">list</a> <a href="/tags/tuple/" style="font-size: 15px;">tuple</a> <a href="/tags/debian/" style="font-size: 15px;">debian</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/MarkDown/" style="font-size: 15px;">MarkDown</a> <a href="/tags/hack/" style="font-size: 15px;">hack</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/service/" style="font-size: 15px;">service</a> <a href="/tags/nginx/" style="font-size: 15px;">nginx</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/tk/" style="font-size: 15px;">tk</a> <a href="/tags/vim/" style="font-size: 15px;">vim</a> <a href="/tags/vsftp/" style="font-size: 15px;">vsftp</a> <a href="/tags/开始/" style="font-size: 15px;">开始</a> <a href="/tags/我/" style="font-size: 15px;">我</a> <a href="/tags/日记/" style="font-size: 15px;">日记</a> <a href="/tags/sublime/" style="font-size: 15px;">sublime</a> <a href="/tags/ubuntu/" style="font-size: 15px;">ubuntu</a> <a href="/tags/sudo/" style="font-size: 15px;">sudo</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/安全/" style="font-size: 15px;">安全</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/24/docker学习笔记二/">docker学习笔记二</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/24/docker学习笔记/">docker学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/24/hack_tools_assm/">Github上开源的安全渗透攻击类工具集合</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/github_hack_tool/">2019年Github上开源的安全渗透攻击类工具集合</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/05/05/mysql查询优化/">mysql查询优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/03/30/linux性能监控常用命令/">Linux 性能监控那些令人激赏的命令行工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/06/02/C语言的局部变量和全局变量/">C语言的局部变量和全局变量</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/05/31/c语言输入和输出/">c语言输入和输出</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/05/18/c语言变量和数据类型/">c语言变量和数据类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2015/04/25/30个有关Python的小技巧/">30个有关Python的小技巧</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//yulong.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://yanshinian.com/" title="言十年" target="_blank">言十年</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Mryy的博客.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
