@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yulongphp.github.io/2018/10/25/PHP%20%E4%BB%A3%E7%A0%81%E5%AE%89%E5%85%A8%E6%9D%82%E8%B0%88/</loc>
+    
+    <lastmod>2019-02-27T11:42:11.889Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yulongphp.github.io/2018/08/24/hack_tools_assm/</loc>
     
     <lastmod>2019-02-14T08:56:31.242Z</lastmod>
@@ -44,14 +51,14 @@
   </url>
   
   <url>
-    <loc>http://yulongphp.github.io/archives/index.html</loc>
+    <loc>http://yulongphp.github.io/categories/index.html</loc>
     
     <lastmod>2018-08-22T09:43:49.636Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yulongphp.github.io/categories/index.html</loc>
+    <loc>http://yulongphp.github.io/archives/index.html</loc>
     
     <lastmod>2018-08-22T09:43:49.636Z</lastmod>
     
@@ -72,14 +79,14 @@
   </url>
   
   <url>
-    <loc>http://yulongphp.github.io/2015/03/25/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8sublime%E7%BC%96%E8%BE%91%E5%99%A8%E8%BF%90%E8%A1%8Cpython%E7%A8%8B%E5%BA%8F/</loc>
+    <loc>http://yulongphp.github.io/2015/03/09/%E5%A6%82%E4%BD%95%E5%A2%9E%E5%8A%A0sudo%E6%9D%83%E9%99%90/</loc>
     
     <lastmod>2018-08-22T09:43:49.634Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yulongphp.github.io/2015/03/09/%E5%A6%82%E4%BD%95%E5%A2%9E%E5%8A%A0sudo%E6%9D%83%E9%99%90/</loc>
+    <loc>http://yulongphp.github.io/2015/03/25/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8sublime%E7%BC%96%E8%BE%91%E5%99%A8%E8%BF%90%E8%A1%8Cpython%E7%A8%8B%E5%BA%8F/</loc>
     
     <lastmod>2018-08-22T09:43:49.634Z</lastmod>
     
@@ -107,14 +114,14 @@
   </url>
   
   <url>
-    <loc>http://yulongphp.github.io/2014/03/28/%E4%BD%A0%E5%A5%BD/</loc>
+    <loc>http://yulongphp.github.io/2015/01/21/Python%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8Blist%E5%92%8Ctuple/</loc>
     
     <lastmod>2018-08-22T09:43:49.631Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yulongphp.github.io/2015/01/21/Python%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8Blist%E5%92%8Ctuple/</loc>
+    <loc>http://yulongphp.github.io/2014/03/28/%E4%BD%A0%E5%A5%BD/</loc>
     
     <lastmod>2018-08-22T09:43:49.631Z</lastmod>
     
@@ -128,14 +135,14 @@
   </url>
   
   <url>
-    <loc>http://yulongphp.github.io/2015/03/30/debain-%E8%A7%A3%E5%86%B3%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E4%B8%AD%E6%96%87/</loc>
+    <loc>http://yulongphp.github.io/2014/04/27/vimtutor%E6%95%99%E7%A8%8B%E5%B0%8F%E7%BB%93/</loc>
     
     <lastmod>2018-08-22T09:43:49.630Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yulongphp.github.io/2014/04/27/vimtutor%E6%95%99%E7%A8%8B%E5%B0%8F%E7%BB%93/</loc>
+    <loc>http://yulongphp.github.io/2015/03/30/debain-%E8%A7%A3%E5%86%B3%E6%97%A0%E6%B3%95%E6%98%BE%E7%A4%BA%E4%B8%AD%E6%96%87/</loc>
     
     <lastmod>2018-08-22T09:43:49.630Z</lastmod>
     
@@ -163,14 +170,14 @@
   </url>
   
   <url>
-    <loc>http://yulongphp.github.io/2015/04/25/30%E4%B8%AA%E6%9C%89%E5%85%B3Python%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7/</loc>
+    <loc>http://yulongphp.github.io/2015/03/27/python-Tcl-Tk%E5%8C%85%E9%97%AE%E9%A2%98/</loc>
     
     <lastmod>2018-08-22T09:43:49.627Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yulongphp.github.io/2015/03/27/python-Tcl-Tk%E5%8C%85%E9%97%AE%E9%A2%98/</loc>
+    <loc>http://yulongphp.github.io/2015/04/25/30%E4%B8%AA%E6%9C%89%E5%85%B3Python%E7%9A%84%E5%B0%8F%E6%8A%80%E5%B7%A7/</loc>
     
     <lastmod>2018-08-22T09:43:49.627Z</lastmod>
     
