@@ -2,7 +2,7 @@ $(document).ready(function(){
     /**
      * 上报用户信息到打点服务器
      */
-    $.get("http://exampletongji.com/index/tongji",
+    $.get("http://www.hexoBlog.com/dig",
         {
             "time"  : gettime(),
             "url"   : geturl(),
