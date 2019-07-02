@@ -1,0 +1,201 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="一个苦逼屌丝程序员的技术博客"><title>Linux 性能监控那些令人激赏的命令行工具 | Mryy的博客</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Linux 性能监控那些令人激赏的命令行工具</h1><a id="logo" href="/.">Mryy的博客</a><p class="description">生活不仅只是敲代码，还有...调bug...</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Linux 性能监控那些令人激赏的命令行工具</h1><div class="post-meta">Jun 24, 2019<span> | </span><span class="category"><a href="/categories/mysql/">mysql</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2019/06/24/mysql实战章节小结/" href="/2019/06/24/mysql实战章节小结/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>0x04  深入浅出索引总结:</p>
+<pre><code>1. 索引的作用:提高数据查询效率
+2. 索引的常见模型
+1)哈希表:以键-值(key-value)存储数据的结构
+    把值放在数组里，用一个哈希函数把key换算成一个确定的位置，然后把value放在数组的这个位置
+    哈希冲突的处理办法:链表
+    哈希表适用场景:只有等值查询的场景
+2)有序数组:按顺序存储。查询用二分法就可以快速查询，时间复杂度是:O(log(N))
+    有序数组查询效率高，更新效率低
+    有序数组的适用场景:静态存储引擎。 
+3)搜索树:每个节点的左儿子小于父节点，父节点又小于右儿子。查询时间复杂度O(log(N))，更新时间复杂度O(log(N))
+    数据库存储大多不适用二叉树，因为树高过高，会适用N叉树
+3. InnoDB中的索引模型: B+Tree
+    在Innodb中，表都是根据主键顺序以索引的形式存放的，这种存储方式的表称为索引组 织表。Innodb使用的B+树索引类型。每一个索引在InnoDB里面对应一棵B+树
+    B+ 树能够很好地配合磁盘的读写特性，减少单次查询的磁盘访问次数
+4. 索引类型:主键索引、非主键索引
+    主键索引(聚簇索引)：叶子节点存的是整行的数据，
+    非主键索引(二级索引) ：叶子节点内容是主键（主键占用空间不宜过大） 的值
+5. 主键索引和普通索引的区别:
+    主键索引：只要搜索ID这个B+Tree即可拿到数据。
+    普通索引：先搜索索引拿到主键值，再到主键索引树搜索一次(回表) 
+6. 一个数据页满了，按照B+Tree算法，新增加一个数据页，叫做页分裂，会导致性能下降。空间利用率降低大概50%。当相邻的两个数据页利用率很低的时候会做数据页合并， 合并的过程是分裂过程的逆过程。 
+7. 从性能和存储空间方面考量，自增主键往往是更合理的选择。
+8. B+树的插入可能会引起数据页的分裂，删除可能会引起数据页的合并，二者都是比较重的IO消耗，所以比较好的方式是顺序插入数据，这也是我们一般使用自增主键的原因之一。
+9. 索引的实现由存储引擎来决定，InnoDB使用B+树(N叉树，比如1200叉树)，把整颗 树的高度维持在很小的范围内，同时在内存里缓存前面若干层的节点，可以极大地降低访 问磁盘的次数，提高读的效率。
+10. 自增主键的使用场景
+1)主键长度越小，普通索引的叶子节点就越小，普通索引占用的空间也就越小
+2)业务字段做主键场景:
+    1:只有一个索引 
+    2:该索引必须是唯一索引 这是典型的 k-v场景
+        KV场景的意思就是，所有的查询都是where k=N 并没有&gt;= 或者&lt;= 这种操作(没有range操作)
+        在这种场景里，hash索引的效率就比N叉树高
+    由于没有其他索引，估不用考虑其它索引叶子节点大小的问题，故将该值设为主键索引
+11. InnoDB一定会有主键的, 如果没有建立任何的索引，会自动创建一个rowid作为主键的不可见的主键索引
+12. 回到主键索引树搜索的过程，我们称为回表。
+13. 覆盖索引：在查询中索引 k 已经“覆盖了”我们的查询需求，我们称为覆盖索引。因此可以直接提供查询结果，不需要回表。
+    由于覆盖索引可以减少树的搜索次数，显著提升查询性能，所以使用覆盖索引是一个常用的性能优化手段。
+14. 最左前缀原则：B+ 树这种索引结构，可以利用索引的“最左前缀”，来定位 记录。
+15. 只要满足最左前缀，就可以利用索引来加速检索。这个最左前缀可以是联合索引的最左 N 个字段，也可以是字符串索引的最左 M 个字符
+16. 联合索引：索引项是按照索引定义里面出现的字段顺序排序的。
+17. 如何安排索引内的字段顺序：
+    1）如果通过调整顺序，可以少维护一个索引，那么这个顺序往往就是需要优先考虑采用的
+    2）考虑的原则就是空间
+        比如 a b(字段大) 如果既有联合查询，又有各自查询，就需要同时维护(b,a) (a) 两个索引
+17. 索引下推(&gt;=5.6)：可以在索引便利过程中对索引中包含的字段先做判断，直接过滤吊不满足田间的记录，减少回表次数
+    以（name, age）联合索引为例查询 name like&apos;张%&apos; and age = 10
+    无索引下推：
+    ![](/images/no_index_push.png)
+    有索引下推：
+    ![](/images/index_push.png)
+</code></pre><p>思考题:</p>
+<pre><code>通过两个 alter 语句重建索引 k，以及通过两个 alter 语句重建主键索引是 否合理。
+
+重建索引 k 的做法是合理的，可以达到省空间的目的。
+重建主键的过程不合理。不论是删除主键还是创建主键，都会将整个表重建。
+    1. 整个数据库迁移，先dump出来再重建表 (这个一般只适合离线的业务来做)
+    2. alter table T engine=InnoDB。
+    3. 用repaire table 过这个是由存储引擎决定支不支持的(innodb就不行)。
+
+
+1. N叉树 的N值在mysql中可以被人工调整吗？
+    可以按照调整Key值的大小的思路来说，5.6以后可以通过page大小来间接控制
+2. 如果没有主键的表，有一个普通索引。怎么回表?
+    没有主键的表，innodb会给默认创建一个Rowid做主键
+3. 一个innoDB引擎的表，数据量非常大，根据二级索引搜索会比主键搜索快？
+    这个说法只有在使用覆盖索引时才成立，因为覆盖索引里面已经包含当前需要查询的值，非覆盖索引还是要回表查询。
+4. 插入数据如果是在某个数据满了页的首尾，为了减少数据移动和 页分裂，会先去前后两个页看看是否满了，如果没满会先将数据放到前后两个页上？
+    为了增加空间利用率
+5. 如何查看索引数的结构，比如多少个层，多少节点?
+    可以估算出来的，根据表的行数和索引的定义。如果要精确的，就要解数据文件，这个工具可以看看 https://github.com/jeremycole/innodb_diagrams
+6. 如何查看索引的利用率。比如我创建了一个索引，是否可以有记录这个索引被调用了 多少次?
+   performance_schema.table_io_waits_summary_by_index_usage能看到一些信息 
+7. 非聚集索引上为什么叶子节点不是数据行的地址，而是主键id
+    这个叫作“堆组织表”，MyISAM就是这样的，各有利弊。你想一下如果修改了数据 的位置的情况，InnoDB这种模式是不是就方便些
+8. 单表主键建索引，分库的时候不能用到自增主键，这个索引怎么处理？
+    分库分表可以用自增主键的，有的公司是用步长来控制
+9. 如果磁盘中的主键索引已经存储了这个表的全部数据的话，那常说的没走索引是遍历整个B+树还是其他地方还有整个表的数据呢?
+    就是遍历这个主键索引的意思
+10. 自增主键在高并发量或者频繁插入的情境下，是否仍然适合使用呢?自增主键在高并发量或者频繁插入的情境下，是否仍然适合使用呢?
+    可以的，当然可能会导致没那么紧凑，但是也是不错的了
+11. 以 InnoDB 的一个整数字段索引为例，这个 N 差不多是 1200。”这个怎么理解呢?
+    一个page的大小是固定的(默认16k) 索引大小固定的情况下，一个page可以放的item数是固定的， 如果是int型，是1200个左右。 
+12. 如果把多个列联合起来搞成主键索引，那么二级索引里包含的主键是什么样的呢，也是多列?
+    对，多列
+13. 什么要重建索引？
+索引可能因为删除，或者页分裂等原因，导致数据页有空洞，重建索引的过程会创建一个新的索引，把数据按顺序插入，这样页面的利用率最高，也就是索引更紧凑、更省空间。
+</code></pre><p>0x05 全局锁和表锁总结</p>
+<pre><code>1. 数据库锁设计的初衷是处理并发问题。
+2. 作为多用户共享 的资源，当出现并发访问的时候，数据库需要合理地控制资源的访问规则。而锁就是用来 实现这些访问规则的重要数据结构。
+3. MySQL 里面的锁大致可以分成全局锁、表级锁和行锁三类
+4. 全局锁：全局锁就是对整个数据库实例加锁
+    加锁：Flush tables with read lock (FTWRL)
+    解锁：可以用 unlock tables 主动释放锁，也可以在客户端断开的时候自动释放。
+    这个命令可以使整个库处于只读状态。使用该命令之后，数据更新语句(数据的增删 改)、数据定义语句(包括建表、修改表结构等)和 更新类事务的提交语句等操作都会被阻塞。
+    使用场景：做全库逻辑备份（在备份过程中整个库完全处于只读状态）
+    风险：
+        1）在主库上备份，那么备份期间都不能执行更新，业务基本上就得停摆
+        2）在从库上备份，那么备份期间从库不能执行主库同步过来的 binlog，会导致主从延迟。
+    规避风险：
+        在可重复读隔离级别下开启一个事务。
+        官方自带的逻辑备份工具是 mysqldump。当 mysqldump 使用参数–single-transaction 的时候，导数据之前就会启动一个事务，来确保拿到一致性视图。而由于 MVCC 的支持， 这个过程中数据是可以正常更新的.
+        single-transaction方法只适用于所有的表使用支持事务引擎的库
+5. 业务的更新不只是增删改数据(DML)，还有可能是加字段等修改表结构的操作 (DDL)。不论是哪种方法，一个库被全局锁上以后，你要对里面任何一个表做加字段操作，都是会被锁住的。
+6. 表级锁：表锁  元数据锁(meta data lock， MDL（&gt;=5.5）)
+7. 表锁的语法是 lock tables ... read/write。
+    可以用 unlock tables 主动释放锁，也可以在客户端断开的时候自动释放。
+    MDL 不需要显式使用，在访问一个表的时 候会被自动加上。
+    MDL 的作用是，保证读写的正确性
+    当对一个表做增删改查操作的时候，加 MDL 读锁;
+    当要对表做结构变更操作的时候，加 MDL 写锁
+    读锁之间不互斥，因此你可以有多个线程同时对一张表增删改查。
+    读写锁之间、写锁之间是互斥的，用来保证变更表结构操作的安全性。因此，如果有两个线程要同时给一个表加字段，其中一个要等另一个执行完才能开始执行。
+    事务中的 MDL 锁，在语句执行开始时申请，直到整个事务提交后再释放。
+    注意：
+        lock tables 语法除了会限制别 的线程的读写外，也限定了本线程接下来的操作对象。
+        举个例子, 如果在某个线程 A 中执行 lock tables t1 read, t2 write; 这个语句，则其他线 程写 t1、读写 t2 的语句都会被阻塞。同时，线程 A 在执行 unlock tables 之前，也只能 执行读 t1、读写 t2 的操作。连写 t1 都不允许，自然也不能访问其他表
+8. 没有出现更细粒度的锁的时候，表锁是最常用的处理并发的方式。
+    对于InnoDB这种支持行锁的引擎，一般不使用lock tables命令来控制并发，毕竟锁住整个表的影响面还是太大。
+9. 全局锁主要用在逻辑备份过程中。对于全部是 InnoDB 引擎的库，我建议你选择使用–single-transaction 参数，对应用会更友好。
+10. 表锁一般是在数据库引擎不支持行锁的时候才会被用到的。如果你发现你的应用程序里有 lock tables 这样的语句，你需要追查一下，比较可能的情况是:
+    1）要么是你的系统现在还在用 MyISAM 这类不支持事务的引擎，那要安排升级换引擎;
+    2）要么是你的引擎升级了，但是代码还没升级。我见过这样的情况，最后业务开发就是把 lock tables 和 unlock tables 改成 begin 和 commit，问题就解决了。
+11. MDL 会直到事务提交才释放，在做表结构变更的时候，你一定要小心不要导致锁住线上查 询和更新
+</code></pre><p>思考题：</p>
+<pre><code>1. 备份为什么要加锁呢？
+   不加锁的话，备份系统备份的得到的库不是一个逻辑时间点，这个视图是逻辑不一致的。
+2. 怎么保证备份的时候能够数据正常更新呢？
+   innodb可用官方自带的逻辑备份工具是 mysqldump。当 mysqldump 使用参数–single-transaction 的时候，导数据之前就会启动一个事务，来确保拿到一致性视图。而由于 MVCC 的支持， 这个过程中数据是可以正常更新的.
+3. 既然要全库只读，为什么不使用 set global readonly=true 的方式呢？确实 readonly 方式也可以让全库进入只读状态，但我还是会建议你用 FTWRL 方式，主要 有两个原因:
+    1）在有些系统中，readonly 的值会被用来做其他逻辑，比如用来判断一个库是主库 还是备库。因此，修改 global 变量的方式影响面更大，我不建议你使用。
+    2）在异常处理机制上有差异。如果执行 FTWRL 命令之后由于客户端发生异常断开，那么 MySQL 会自动释放这个全局锁，整个库回到可以正常更新的状态。而将整个库设置为 readonly 之后，如果客户端发生异常，则数据库就会一直保持 readonly 状 态，这样会导致整个库长时间处于不可写状态，风险较高
+4. 有了官方mysqldump工具，为什么还需要FTWRL呢？
+    一致性读是好，但前提是引擎要支持这个隔离级别（可重复读）
+    对于MyISAM不支持事务的引擎，如果备份中有更新，总能拿到新数据，就需要使用FTWRL命令了。
+5. 如何安全地给小表加字段?
+    1）首先我们要解决长事务，事务不提交，就会一直占着 MDL 锁。在 MySQL 的 information_schema 库的 innodb_trx 表中，你可以查到当前执行中的事务。如果你要 做 DDL 变更的表刚好有长事务在执行，要考虑先暂停 DDL，或者 kill 掉这个长事务。
+    2）对于请求很频繁的表，kill可能未必管用，因为新的请求马上就来了。比较理想的机制是，在 alter table 语句里面设定等待时间，如果在这个指定的等待时间里面能够拿到 MDL 写锁最好，拿不到也不要阻塞后面的业务语句，先放弃。之后开发人员或者 DBA 再通过重试命令重复这个过程。
+    MariaDB 已经合并了 AliSQL 的这个功能，所以这两个开源分支目前都支持 DDL NOWAIT/WAIT n 这个语法。
+        1 ALTER TABLE tbl_name NOWAIT add column ... 
+        2 ALTER TABLE tbl_name WAIT N add column ...   
+
+6. 当备库用–single-transaction 做逻辑备份的时候，如果从主库的 binlog 传来一个 DDL 语句会怎么样?
+</code></pre><p>0x07  行锁功过:怎么减少行锁对性能的影响?</p>
+<pre><code>1. MySQL 的行锁是在引擎层由各个引擎自己实现的。但并不是所有的引擎都支持行锁.
+2. 不支持行锁意味着并发控制只能使用表锁，对于这种引 擎的表，同一张表上任何时刻只能有一个更新在执行，这就会影响到业务并发度
+3. 两阶段锁：在 InnoDB 事务中，行锁是在需要的时候才加上的，但并不是不需要了就立刻 释放，而是要等到事务结束时才释放。这个就是两阶段锁协议。
+4. 如果你的事务中需要锁多个行，要把最可能造成锁冲突、最可能影响并发度的锁尽量往后放。
+5. 死锁：当并发系统中不同线程出现循环资源依赖，涉及的线程都在等待别的线程释放资源时，就会导致这几个线程都进入无限等待的状态。
+    解决方案：
+        1）直接进入等待，直到超时。这个超时时间可以通过参数 innodb_lock_wait_timeout 来设置（默认50秒）。
+            会出现好多误伤，不建议
+        2）发起死锁检测，发现死锁后，主动回滚死锁链条中的某一个事务，让其他事务得以继续执行。将参数 innodb_deadlock_detect 设置为 on。 默认开启
+            死锁检测会消耗大量cpu资源
+6. 死锁检测：每当一个事务被锁的时候，就要看看它所依赖的线程有没有被别人锁住，如此循环，最后判断是否出现了循环等待，也就是死锁。
+7. innodb行级锁是通过锁索引记录实现的，如果更新的列没建索引是会锁住整个表的（InnoDB内部是根据主键索引逐行扫描，逐行加锁，事务提交的时候统一释放）
+</code></pre><p>思考题：</p>
+<pre><code>1. 怎么解决由这种热点行更新导致的性能问题呢?
+    1）如果你能确保这个业务一定不会出现死锁，可以临时把死锁检测关掉。
+        风险：
+            业务设计的时候一般不会把死锁当做一个严重错误，毕竟出现死锁了，就回滚，然后通过业务重试一般就没问题了，这是业务无损的。
+            关掉死锁检测意味着可能会出现大量的超时，这是业务有损的
+    2）另一个思路是控制并发度。这个并发控制要做在数据库服务端。如果你有中间件，可以考虑在中间件实现;
+        基本思路就是，对于相同行的更新，在进入引擎之前排队。这样在 InnoDB 内部就不会有大量的死锁检测工作了。
+    3）设计上解决：通过将一行改成逻辑上的多行来减少锁冲突。这类方案需要根据业务逻辑做详细设计，有些地方需要做特殊处理
+</code></pre><p>0x08 事务到底是隔离的还是不隔离的?</p>
+<pre><code>1. begin/start transaction 命令并不是一个事务的起点，在执行到它们之后的第一个操作 InnoDB 表的语句，事务才真正启动。 如果你想要马上启动一个事务，可以使用 start transaction with consistent snapshot 这个命令。
+2. 在 MySQL 里，有两个“视图”的概念:
+    1) 一个是 view。它是一个用查询语句定义的虚拟表，在调用的时候执行查询语句并生成结果。
+        创建视图的语法是 create view ... ，而它的查询方法与表一样
+    2) 另一个是 InnoDB 在实现 MVCC 时用到的一致性读视图，即 consistent read view， 用于支持 RC(Read Committed，读提交)和 RR(Repeatable Read，可重复读)隔 离级别的实现。
+    它没有物理结构，作用是事务执行期间用来定义“我能看到什么数据”。
+
+3. “快照”在 MVCC 里是怎么工作的?
+</code></pre><p>mysql optimize整理表碎片<br>    当您的库中删除了大量的数据后，您可能会发现数据文件尺寸并没有减小。这是因为删 除操作后在数据文件中留下碎片所致。<br>    optimize table 可以去除删除操作后留下的数据文件碎片，减小文件尺寸，加快未来的读写操作。<br>    OPTIMIZE TABLE通过制作原来的表的一个临时副本来工作<br>    OPTIMIZE TABLE语法<br>        OPTIMIZE [LOCAL | NO_WRITE_TO_BINLOG] TABLE tbl_name [, tbl_name] …<br>        如果您已经删除了表的一大部分，或者如果您已经对含有可变长度行的表（含有 VARCHAR, BLOB或TEXT列的表）进行了很多更改，则应使用OPTIMIZE TABLE。被删除的记录被保持在链接清单中，后续的INSERT操作会重新使用旧的记录位置。您可以使用OPTIMIZE TABLE来重新利用未使用的空间，并整理数据文件的碎片。</p>
+<pre><code>    在多数的设置中，您根本不需要运行OPTIMIZE TABLE。即使您对可变长度的行进行了大量的更新，您也不需要经常运行，每周一次或每月一次即可，只对特定的表运行。
+
+OPTIMIZE TABLE只对MyISAM, BDB和InnoDB表起作用。
+
+对于MyISAM表，OPTIMIZE TABLE按如下方式操作：    
+    1. 如果表已经删除或分解了行，则修复表。
+    2. 如果未对索引页进行分类，则进行分类。
+    3. 如果表的统计数据没有更新（并且通过对索引进行分类不能实现修复），则进行更新。
+
+对于BDB表，OPTIMIZE TABLE目前被映射到ANALYZE TABLE上。
+
+对于InnoDB表，OPTIMIZE TABLE被映射到ALTER TABLE上，这会重建表。重建操作能更新索引统计数据并释放成簇索引中的未使用的空间。
+
+使用—skip-new或—safe-mode选项可以启动mysqld。通过启动mysqld，您可以使OPTIMIZE TABLE对其它表类型起作用。
+
+注意，在OPTIMIZE TABLE运行过程中，MySQL会锁定表。
+
+OPTIMIZE TABLE语句被写入到二进制日志中，除非使用了自选的NO_WRITE_TO_BINLOG关键词（或其别名LOCAL）。已经这么做了，因此，用于 MySQL服务器的OPTIMIZE TABLE命令的作用相当于一个复制主服务器，在默认情况下，这些命令将被复制到复制从属服务器中。
+</code></pre></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yulongphp.github.io/2019/06/24/mysql实战章节小结/" data-id="cjxlei9q5000zp38yk5r4adw8" class="article-share-link">分享到</a><div class="tags"><a href="/tags/mysql/">mysql</a></div><div class="post-nav"><a href="/2019/06/24/分布式锁/" class="pre"></a><a href="/2019/05/05/mysql查询优化/" class="next">mysql查询优化</a></div><div id="disqus_thread"><script>var disqus_shortname = 'yulong';
+var disqus_identifier = '2019/06/24/mysql实战章节小结/';
+var disqus_title = 'Linux 性能监控那些令人激赏的命令行工具';
+var disqus_url = 'http://yulongphp.github.io/2019/06/24/mysql实战章节小结/';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//yulong.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yulongphp.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/debian/">debian</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php7/">php7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sublime/">sublime</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/日志/">日志</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/hack/" style="font-size: 15px;">hack</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/list/" style="font-size: 15px;">list</a> <a href="/tags/tuple/" style="font-size: 15px;">tuple</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/安全/" style="font-size: 15px;">安全</a> <a href="/tags/debian/" style="font-size: 15px;">debian</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/MarkDown/" style="font-size: 15px;">MarkDown</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/service/" style="font-size: 15px;">service</a> <a href="/tags/nginx/" style="font-size: 15px;">nginx</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/php7/" style="font-size: 15px;">php7</a> <a href="/tags/tcl/" style="font-size: 15px;">tcl</a> <a href="/tags/tk/" style="font-size: 15px;">tk</a> <a href="/tags/sed/" style="font-size: 15px;">sed</a> <a href="/tags/vim/" style="font-size: 15px;">vim</a> <a href="/tags/vsftp/" style="font-size: 15px;">vsftp</a> <a href="/tags/开始/" style="font-size: 15px;">开始</a> <a href="/tags/我/" style="font-size: 15px;">我</a> <a href="/tags/日记/" style="font-size: 15px;">日记</a> <a href="/tags/ubuntu/" style="font-size: 15px;">ubuntu</a> <a href="/tags/sudo/" style="font-size: 15px;">sudo</a> <a href="/tags/sublime/" style="font-size: 15px;">sublime</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/06/29/mysql实战45讲/">mysql实战45讲</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/27/mysql总结/">Linux 性能监控那些令人激赏的命令行工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/27/高性能mysql/">高性能mysql</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/25/算法与数据结构/">算法与数据结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/25/sed/">sed常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/24/分布式锁/">分布式锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/24/mysql实战章节小结/">Linux 性能监控那些令人激赏的命令行工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/05/mysql查询优化/">mysql查询优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/01/php部分语法的AST栈符号表和指令集/">php 部分语法的AST、栈、符号表、和指令集</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/30/php代码的编译和执行/">php 代码的编译与执行</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//yulong.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://yanshinian.com/" title="言十年" target="_blank">言十年</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Mryy的博客.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

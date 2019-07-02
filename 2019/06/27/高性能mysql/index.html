@@ -1,0 +1,164 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="一个苦逼屌丝程序员的技术博客"><title> | Mryy的博客</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Mryy的博客</h1><a id="logo" href="/.">Mryy的博客</a><p class="description">生活不仅只是敲代码，还有...调bug...</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title"></h1><div class="post-meta">Jun 27, 2019<script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2019/06/27/高性能mysql/" href="/2019/06/27/高性能mysql/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>什么是事务？<br>事务就是一组原子行为的sql查询，或者说一个独立的工作单元。如果数据库引擎能成功的多数据库应用该组查询的全部语句，那么就执行该组查询。如果其中有任何一条语句因为崩溃或其他原因无法执行，那么所有的语句都不会执行。<br>也就是说，事务内的语句，要么全部执行成功，要么全部执行失败。</p>
+<p>什么是ACID？<br>原子性，一致性，隔离性，持久性。<br>原子性：一个事务必须被视为一个不可分割的，最小工作单元，整个事务中的所有操作要么全部提交成功，要么全部失败回滚，对于一个事务来说，不可能只执行其中的一部分操作，这就是事务的原子性。<br>一致性：数据库总是从一个一致性的状态转换到另一个一致性的状态。<br>隔离型：通常来说，一个事务所做的修改在最终提交以前，对其他事务是不可见的。<br>持久性：一旦事务提交，则其所做的修改就会永久保存到数据库中</p>
+<p>mysql存储引擎的优势？<br>用户可以根据业务是否需要事务处理，来选择合适的存储引擎。对于一些不需要事务的查询类应用，选择一个非事务型的存储引擎，可以获得更高的性能。即使存储引擎不支持事务，也可以通过lock tables语句为应用提供一定程度的保护，这些选择用户都可以自主决定</p>
+<p>什么是隔离级别？<br>mysql标准中定义了四种隔离级别，每一种级别都规定了一个事务中所做的修改，哪些在事务内和事务间是可见的，哪些是不可见的。较低级别的隔离通常可以执行更高的并发，系统的开销也更低。<br>READ UNCOMMITED（未提交读）<br>    事务中的修改，即使没有提交，对其他事务也都是可见的。事务可以读取未提交的是数据，这也被称为脏读。这个级别会导致很多问题提，从性能上来说，不会比其他的级别好太多，但却缺乏其他级别的很多好处，除非真的有非常必要的理由，在实际应用中一般很少使用<br>READ COMMITED（提交读/不可重复读）<br>    大多数是数据库系统默认隔离级别都是此级别（mysql不是）。满足隔离性的简单定义：一个事务开始时，只能看见已经提交的事务所做的修改。换句话说，一个事务从开始直到提交之前，所做的任何修改对其他事务都是不可见的，也叫做不可重复读，因为两次执行同样的查询，可能会得到不一样的结果。<br>REPEATABLEREAD （可重复读）<br>    解决了脏读的问题。保证了在同一个事务中多次读取同样记录的结果是一致的。但是理论上，可重复读隔离级别还是无法解决另一个幻读的问题。所谓幻读，指的是当某个事务在读取某个范围内的记录时，另外一个事务又在该范围内插入了新的记录，当之前的事务再次读取该范围的记录时，会产生幻行。Innodb和XtraDB通过多版本并发控制解决了幻读的问题。<br>    可重复读是mysql的默认事务隔离级别<br>SERIALIZABLE （可串行化）<br>    最高级别。他通过强制事务串行执行，避免了幻读的问题。简单来说，会在读取的每一行数据上都加锁，所以可能导致大量的超时和锁争用的问题。只有在非常需要确保数据的一致性而且可以接受没有并发的情况下，才用此级别。</p>
+<p>隔离级别                      脏读可能性                  不可重复读可能性                幻读可能性               加锁读<br>READ UNCOMMITED                 yes                         yes                         yes                  no<br>READ COMMITED                   no                          yes                         yes                  no<br>REPEATABLEREAD                  no                          no                          yes                  no<br>SERIALIZABLE                    no                          no                          no                   yes</p>
+<p>什么是死锁？<br>    死锁是指两个或者多个事务在同一资源上相互占用，并请求锁定对方占用的资源，从而导致恶性循环的现象。当多个事务试图以不同的顺序锁定资源时，就可能产生死锁。多个事务同时锁定同一个资源时，也会产生死锁。</p>
+<p>例如：<br>    事务1:<br>        update stock set num = 1 where id = 4;<br>        update stock set num = 2 where id = 3;</p>
+<pre><code>事务2:
+    update stock set num = 5 where id = 3;
+    update stock set num = 6 where id = 4;
+如果凑巧，两个事务都执行了第一条语句，更新了一行数据，同时也锁定了该行数据，接着每个事务都尝试执行第二条语句，却发现该行已经被对方锁定，然后两个事务都等待对方释放锁，
+同时又都持有对方需要的锁，则陷入死循环。除非有外部因素介入才可能解除死锁。
+
+为了解决这种问题，数据库系统实现各种死锁检测和死锁超时机制。越复杂的系统，比如Innodb存储引擎，越能检测到死锁的循环依赖，并立即返回一个错误。
+这种解决方式很有效，否则会导致出现非常慢的查询。还有一种方式，当查询的时间达到锁等待的超时是死时间后放弃锁请求，这种通常来说不太好
+
+InnoDB目前处理死锁的方法是：将持有最少行级排他锁的事务进行回滚（比较简单的死锁回滚算法）
+
+死锁产生的双重原因：有些是因为真正的数据冲突，这种情况通常很难避免。有些则完全是由于存储引擎的实现方式导致
+</code></pre><p>事务日志<br>    事务日志可以帮助提高事务的效率。使用事务日志，存储引擎在修改表的数据时只需要修改其内存拷贝，再把该修改行为记录到持久在硬盘上的事务日志中，而不用每次都将修改的数据本身持久到磁盘。事务日志采用的是追加的方式，因此写日志的操作是磁盘<br>上一小块区域内的顺序I/O,而不像随机I/O需要在磁盘的多个地方移动磁头，所以采用事务日志的方式相对来说要快得多。事务日志持久以后，内存中被修改的数据在后台可以慢慢地刷回到磁盘。目前大多数存储引擎都是这样实现的，我们通常称之为预写式日志(Write-Ahead Logging),修改数据需要写两次磁盘。<br>    如果数据的修改已经记录到事务日志并持久化，但数据本身还没有写回磁盘，此时系统崩溃，存储引擎在重启时能够自动恢复这部分修改的数据。具体的恢复方式则视存储引擎而定。</p>
+<p>mysql提供了两种支持事务型的存储引擎：InnoDB 和 NDB Cluster</p>
+<p>mysql 默认采用自动提交模式：也就是说，如果不是显式的开始一个事务，则每个查询都被当作一个事务执行提交操作。<br>    可以通过设置AUTOCOMMIT变量来启用或者禁用自动提交<br>        show variables like ‘autocommit’; // 查询是否开启<br>        set autocommit=1; // 1或ON表示启用，0或OFF表示禁用 等于0时所有的查询都在一个事务中，直到显示的commit或者rollback，该事务结束，同时又开始另一个新事务。<br>    修改autocommit对非事务型的表比如MyISAM或者内存表，不会有任何影响，对这种表来说，相当于一直处于开启状态<br>    ALTER table、LOCK TABLES 等语句在执行之前会强制执行commit提交当前的活动事务</p>
+<p>mysql可以通过 set transaction isolation level 命令设置隔离级别。新的隔离级别会在下一个事务开始时候生效。<br>        也可以在配置文件中设置整个数据库的隔离级别。<br>        也可以只修改当前会话的隔离级别： set session transaction isolation level READ COMMITED;</p>
+<p>mysql 能够识别所有的四个ANSI隔离级别，InnoDB引擎也支持所有的隔离级别</p>
+<p>在事务中混合使用存储引擎<br>    mysql服务层不管理事务，事务是由下层的存储引擎实现的，所以在一个事务中，使用多种存储引擎是不可靠的</p>
+<pre><code>如果在事务中使用了事务型和非事务型表，在正常提交的情况下不会有什么问题。如果需要事务回滚，非事务型的表上的变更就无法撤销，会导致数据库处于不一致的状态，事务的最终结果将无法确定。
+
+在非事务型的表上执行事务相关的操作，mysql通常不会发出提醒，也不会报错。有时候只有回滚的时候会发出警告‘某些非事务型的表上的变更不能回滚’。大多数情况下，对非事务型的表的操作都不会有提示。
+</code></pre><p>隐式和显示锁定<br>    Innodb采用的是两阶段锁定协议。在事务执行过程中，随时可以执行锁定，锁只有在commit或者rollback的时候才会释放，并且所有的锁是在同一时刻被释放。前面描述的锁定都是隐式锁定，innodb会根据隔离级别在需要的时候自动加锁</p>
+<p>MySQL也支持LOCK TABLES 和UNLOCK TABLES 语句，这是在服务器层实现的，和存储引擎无关。它们有自己的用途，但并不能替代事务处理。如果应用需要用到事务，还是应该选择事务型存储引擎。</p>
+<p>经常会发现应用已经将表从myisam转到innodb，但还是显式地使用lock tables 语句。这不但没有必要，还会严重影响性能，实际上innodb的行级锁工作的更好</p>
+<blockquote>
+<p>LOCK TABLES和事务之间相互影响的话，情况会变得非常复杂，在某些MySQL版本.<br>中甚至会产生无法预料的结果。因此，本书建议，除了事务中禁用了AUTOCOMMIT,<br>可以使用LOCK TABLES 之外，其他任何时候都不要显式地执行LOCK TABLES, 不管<br>使用的是什么存储引擎。</p>
+</blockquote>
+<p>多版本并发控制<br>    MySQL的大多数事务型存储引擎实现的都不是简单的行级锁。基于提升并发性能的考虑，它们一般都同时实现了多版本并发控制(MVCC)。 不仅是MySQL,包括Oracle、PostgreSQL等其他数据库系统也都实现了MVCC,但各自的实现机制不尽相同，因为MVCC没有一个统一的实现标准。</p>
+<pre><code>可以认为MVCC是行级锁的一个变种，但是它在很多情况下避免了加锁操作，因此开销更低。虽然实现机制有所不同，但大都实现了非阻塞的读操作，写操作也只锁定必要的行。
+
+MVCC的实现，是通过保存数据在某个时间点的快照来实现的。也就是说，不管需要执行多长时间，每个事务看到的数据都是一致的。根据事务开始的时间不同，每个事务对同一张表，同一时刻看到的数据可能是不一样的。
+如果之前没有这方面的概念，这句话听起来就有点迷惑。熟悉了以后会发现，这句话其实还是很容易理解的。
+
+前面说到不同存储引擎的MVCC实现是不同的，典型的有乐观(optimistic) 并发控制和悲观(pessimistic) 并发控制。
+</code></pre><p>下面我们通过InnoDB的简化版行为来说明MVCC是如何工作的。</p>
+<ol>
+<li><p>innodb的并发控制（MVCC）是如何实现的？<br> 通过在每行记录后面保存连个隐藏的列来生实现。这两个列，一个保存创建的时间，一个保存过期时间（或删除时间）保存的并不是实际的时间值，而是系统版本号。没开启一个新的事务，系统版本号会自动递增。<br>事务开始时刻的系统版本号会作为事务的版本号，用来和查询到的每行记录的版本号进行比较。</p>
+</li>
+<li><p>REPEATABLE READ隔离级别下，MVCC的具体操作<br>SELECT<br> InnoDB会根据一下两个条件检查每行记录：</p>
+<pre><code>a：InnoDB只查找版本早于当前事务版本的数据行（也就是，行的系统版本好小于或等于事务的系统版本号），
+   这样可以保证事务读取的行，要么是在事务开始前已经存在的，要么是事务自身插入或者修改过的
+b：行的删除版本要么未定义，要么大于当前事务版本号。这可以确保事务读取到的行，在事务开始之前未被删除
+</code></pre><p> 只有符合上述两个条件的记录，才能返回作为查询结果。<br>INSERT<br> InnnoDB为新插入的每一行保存当前系统版本号作为版本号<br>DELETE<br> InnoDB为删除的每一行保存当前系统版本号作为删除标识。<br>UPDATE<br> InnoDB为插入一行新纪录，保存当前系统版本号作为行版本号，同时保存当前系统版本号到原来的行作为删除标识</p>
+<p> 保存这两个额外系统版本号，使大多数读操作都可以不用加锁。这样设计使得读数据操作很简单，性能很好，并且也能保证只会读取到符合标准的行。不足之处是每行记录都<br>需要额外的存储空间，需要做更多的行检查工作，以及一些额外的维护工作。</p>
+<p> MVCC只在REPEATABLE READ 和READ COMMITTED 两个隔离级别下工作。其他两个隔离级别都和MVCC不兼容生4,因为READ UNCOMMITTED 总是读取最新的数据行，而不是符合<br>当前事务版本的数据行。而SERIALIZABLE则会对所有读取的行都加锁。</p>
+</li>
+</ol>
+<p>mysql加载配置文件顺序<br>    mysql –help | grep my.cnf<br>/etc/my.cnf /etc/mysql/my.cnf /usr/local/etc/my.cnf ~/.my.cnf</p>
+<p>查看mysql存放数据文件路径<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show variables like 'datadir'\G;</span><br><span class="line"><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">** 1. row **</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span><span class="strong">*****</span></span><br><span class="line">Variable_name: datadir</span><br><span class="line"><span class="code">        Value: /usr/local/var/mysql/</span></span><br></pre></td></tr></table></figure></p>
+<p>MyISAM引擎的特性：<br>    全文索引，压缩，空间函数（GIS）等，<br>    插入速度快，开销低<br>    查询较快<br>    支持地理空间搜索<br>    对插入速度有很高需求的可以选择myisam或者archive存储引擎（日志型应用）<br>        如果需要对记录的日志做分析报表，会导致插入效率明显降低，该怎么办？</p>
+<pre><code>        1. 利用mysql内置的复制方案将数据复制一份到备库，在被库上执行比较消耗时间和cpu的查询，主库只用于高效的插入工作
+        2. 在系统负载较低的时候执行报表查询操作，但应用在不断变化，可能以后会导致问题
+        3. 分表在日志记录标中包含年月，如web_logs_2012_01, 在已经没有插入操作历时表上做频繁的查询操作
+只读或者大部分情况下只读（读多写少）的表可以选择myisam（前提是不介意myissam崩溃恢复问题）
+    myisam只将数据写到内存中，然后等待操作系统定期将数据刷出到磁盘上
+
+如果要发布一个基于CD-ROM或者DVD-ROM并且使用MySQL数据文件的应用，可以考虑使用MyISAM表或者MyISAM压缩表，这样表之间可以隔离并且可以在不同介质上相互拷贝。MyISAM压缩表比未压缩的表要节约很多空间，但压缩表是只读的。在某些应用中这可能是个大问题。但如果数据放到只读介质的场景下，压缩表的只读特性就不是问题，就没有理由不采用压缩表了。
+
+不支持事务和行级锁，崩溃后无法安全恢复
+崩溃后发生损坏的概率比innodb要高很多，而且恢复速度也要慢。
+备份：如果可以定期关闭服务器来执行备份，备份的因素可以忽略
+</code></pre><p>innodb 特性：<br>    支持事务（如果需要支持事务，innodb或者是XtraDB是目前最稳定并且经过验证的选择）<br>    行级锁<br>    支持外键<br>    崩溃恢复速度比myisam快，数据发生损坏的概率比myisam低<br>    备份：如果要求在线热备份，innodb就是基本的要求<br>    空间占用过多<br>    聚簇索引</p>
+<p>不要轻易相信“MyISAM比InnoDB快”之类的经验之谈，这个结论往往不是绝对的。在很多我们已知的场景中，InnoDB的速度都可以让MyISAM望尘莫及，尤其是使用到<br>聚簇索引，或者需要访问的数据都可以放入内存的应用。在本书后续章节，读者可以了解更多影响存储引擎性能的因素( 如数据大小、I/O 请求量、主键还是二级索引等)以<br>及这些因素对应用的影响。</p>
+<p>当设计上述类型的应用时，建议采用InnoDB。MyISAM引擎在一开始可能没有任何问题，但随着应用压力的_上升，则可能迅速恶化。各种锁争用、崩溃后的数据丢失等问题<br>都会随之而来。</p>
+<p>转换表的引擎</p>
+<pre><code>1. ALTER TABLE
+    ALTER TABLE mytable ENGINE=InnoDB;
+    可以使用任何存储引擎。但需要执行很长时间。mysql会按行将数据从原表复制到一张新表中，在复制期间可能会消耗系统所有的I/O能力，同时原表会加上锁。
+    如果转换表的存储引擎，将会失去和原引擎相关的所有特性。例如，将InnoDB转换为MyISAM，然后再转回InnoDB，原InnoDB表上的外键将丢失。
+2. 导出与导入
+    使用mysqldump将数据文件导出，修改CREATE TABLE 语句的存储引擎，注意同时修改表名，，因为同一个数据库中不能存在相同的表名，即使它们使用的是不同的存储引擎。
+    同时要注意mysqldump默认会自动在CREATE TABLE语句前加上DROP TABLE语句，不注意这一点可能会导致数据丟失。
+3.创建与查询
+    create table test_innodb like test_myisam;
+    Alter table test_innodb ENGINE=InnoDB;
+    insert into test_innodb select * from test_myisam;
+    数据量不大的话，这样做工作的很好。如果数据量很大，则可以考虑做分批处理，针对每一段数据执行事务提交操作，以避免大事务产生过多的undo。这样操作完成以后，新表是原表的一个全量复制，原表还在，如果需要可以删除原表，如果有必要，可以在执行的过程对原表加锁，以确保新表和原表的数据一致。
+    percona toolkit 提供了一个pt-online-schema-change的工具（基于facebook的在线schema变更技术），可以比较简单，方便地执行上述过程，避免手工操作可能导致的失误和繁琐。
+</code></pre><p>性能剖析<br>    问10个人关于性能的问题,可能会得到10个不同的回答,比如“ 每秒查询次数”、“CPU利用率”、“可扩展性”之类。这其实也没有题，每个人在不同场景下对性能有不同的理解，但本章将给性能-一个正式的定义。我们将性能定义为完成某件任务所需要的时间度量，换句话说，性能即响应时间，这是一个非常重要的原则。我们通过任务和时间而不是资源来测量性能。数据库服务器的目的是执行SQL语句，所以它关注的任务是查询或者语句，如SELECT、UPDATE、 DELETE 等。数据库服务器的性能用查询的响应时间来度量，单位是每个查询花费的时间。</p>
+<pre><code>还有另外-一个问题:什么是优化?我们暂时不讨论这个问题，而是假设性能优化就是在一定的工作负载下尽可能地降低响应时间。
+
+很多人对此很迷茫。假如你认为性能优化是降低CPU利用率，那么可以减少对资源的使用。但这是一个陷阱，资源是用来消耗并用来工作的，所以有时候消耗更多的资源能够加快查询速度。很多时候将使用老版本InnoDB引擎的MySQL升级到新版本后，CPU利用率会.上升得很厉害，这并不代表性能出现了问题，反而说明新版本的InnoDB对资源的利用率_上升了。查询的响应时间则更能体现升级后的性能是不是变得更好。版本升级有时候会带来一些bug，比如不能利用某些索?从而导致CPU利用率上升。CPU利用率只是-种现象，而不是很好的可度量的目标。
+
+同样，如果把性能优化仅仅看成是提升每秒查询量，这其实只是吞吐量优化。吞吐量的提升可以看作性能优化的副产品生3。对查询的优化可以让服务器每秒执行更多的查询，因为每条查询执行的时间更短了(吞吐量的定义，是单位时间内的查询数量，这正好是我们对性能的定义的倒数)。
+
+所以如果目标是降低响应时间，那么就需要理解为什么服务器执行查询需要这么多时间，然后去减少或者消除那些对获得查询结果来说不必要的工作。也就是说，先要搞清楚时间花在哪里。这就引申出优化的第二个原则:无法测量就无法有效地优化。所以第一- 步应该测量时间花在什么地方。
+
+我们观察到，很多人在优化时,都将精力放在修改--些东西上,却很少去进行精确的测量。我们的做法完全相反，将花费非常多，甚至90%的时间来测量响应时间花在哪里。如果通过测量没有找到答案，那要么是测量的方式错了，要么是测量得不够完整。如果测量了系统中完整而且正确的数据，性能问题一般都能暴露出来，对症下药的解决方案也就比较明了。测量是一项很有挑战性的工作，并且分析结果也同样有挑战性，测出时间花在哪里，和知道为什么花在那里，是两码事。
+
+前面提到需要合适的测量范围，这是什么意思呢?合适的测量范围是说只测量需要优化的活动。有两种比较常见的情况会导致不合适的测量:
+    在错误的时间启动和停止测量。
+    测量的是聚合后的信息，而不是目标活动本身。
+
+完成一项任务所需要的时间可以分成两部分:执行时间和等待时间。如果要优化任务的执行时间，最好的办法是通过测量定位不同的子任务花费的时间，然后优化去掉--些子任务、降低子任务的执行频率或者提升子任务的效率。而优化任务的等待时间则相对要复杂一些，因为等待有可能是由其他系统间接影响导致，任务之间也可能由于争用磁盘或者CPU资源而相互影响。根据时间是花在执行还是等待上的不同，诊断也需要不同的工具和技术。
+
+通过性能剖析进行优化
+一旦掌握并实践面向响应时间的优化方法，就会发现需要不断地对系统进行性能剖析(profiling)。
+
+性能剖析是测量和分析时间花费在哪里的主要方法。性能剖析一般有两个步骤:测量任务所花费的时间;然后对结果进行统计和排序，将重要的任务排到前面。
+
+性能剖析工具的工作方式基本相同。在任务开始时启动计时器，在任务结束时停止计时器，然后用结束时间减去启动时间得到响应时间。也有些工具会记录任务的父任务。这些结果数据可以用来绘制调用关系图，但对于我们的目标来说更重要的是，可以将相似的任务分组并进行汇总。对相似的任务分组并进行汇总可以帮助对那些分到一组的任务做更复杂的统计分析，但至少需要知道每一组有多少任务，并计算出总的响应时间。通过性能剖析报告(profilereport)可以获得需要的结果。性能剖析报告会列出所有任务列表。每行记录-一个任务，包括任务名、任务的执行时间、任务的消耗时间、任务的平均执行时间，以及该任务执行时间占全部时间的百分比。性能剖析报告会按照任务的消耗时间进行降序排序。
+pt-query-digest（实际上就是著名的Maatkit工具中的mk-query-digest）
+
+NewRelic会插人到应用程序中进行性能剖析，将收集到的数据发送到-一个基于Web的仪表盘，使用仪表盘可以更容易利用面向响应时间的方法分析应用性能。这样用户只需要考虑做那些正确的事情，而不用考虑如何去做。而且NewRelic测量了很多用户体验相关的点，涵盖从Web浏览器到应用代码,再到数据库及其他外部调用。
+
+像New Relic这类工具的好处是可以全天候地测量生产环境的代码--既不限于测试环境,也不限于某个时间段。这--点非常重要,因为有很多剖析工具或者测量点的代价很高,所以不能在生产环境全天候运行。在生产环境运行，可以发现- -些在测试环境和预发环境无法发现的性能问题。如果工具在生产环境全天候运行的成本太高，那么至少也要在集群中找--台服务器运行，或者只针对部分代码运行，原因请参考前面的“性能剖析本身会导致服务器变慢吗?”。
+</code></pre><p>捕获mysql的查询到日志文件中<br>    在MySQL中，慢查询日志最初只是捕获比较“慢”的查询，而性能剖析却需要针对所有的查询。<br>    MySQL 5.0及之前，慢查询日志的响应时间的单位是秒，粒度太粗了<br>    MySQL 5.1及更新的版本中，慢日志的功能已经被加强，可以通过设置long_ query_ time 为0来捕获所有的查询，而且查询的响应时间单位已经可以做到微秒级。<br>    慢查询日志是开销最低、精度最高的测量查询时间的工具。<br>    在I/O密集型场景做过基准测试，慢查询日志带来的开销可以忽略不计(实际上在CPU密集型场景的影响还稍微大–些)。<br>    需要担心的是日志可能消耗大量的磁盘空间。如果长期开启慢查询日志，注意要部署日志轮转(log rotation)工具。或者不要长期启用慢查询日志，只在需要收集负载样本的期间开启即可。</p>
+<pre><code>MySQL还有另外-种查询日志，被称之为“通用日志”，通用日志在查询请求到服务器时进行记录，所以不包含响应时间和执行计划等重要信息。
+</code></pre><p>剖析单条查询<br>    使用 SHOW PROFILE(&gt;5.1) 默认禁用  set profiling=1 开启<br>    当一条查询提交给服务器时，此工具会记录剖析信息到一张临时表，并且给查询赋予一个从1开始的整数标识符。<br>    例子：<br>        1.查询语句 ： select <em> from  sku where name like ‘knewb1E07%’<br>        2.显式查询语句编号： show profiles;<br>            QUERY_ID Duration  Query<br>            1    0.00008600    set <code>PROFILING</code>=1<br>            2    0.00838500    SELECT </em> FROM <code>sku</code> ORDER BY <code>id</code> LIMIT 0,1000<br>            3    0.01744000    SELECT <em> FROM <code>sku</code> ORDER BY <code>id</code> DESC LIMIT 0,1000<br>            4    0.00427500    SHOW COLUMNS FROM <code>sku</code><br>            5    0.00394600    select </em> from  sku where name like ‘knewb1E07%’</p>
+<pre><code>3. 查看第五条语句查询执行的每个步骤花费的时间 ：show profile for query 5
+4. 格式化分析结果： 
+mysql&gt; SELECT STATE, SUM(DURATION) AS Total_R,
+    -&gt;     ROUND(
+    -&gt;         100 * SUM(DURATION) /
+    -&gt;            (SELECT SUM(DURATION)
+    -&gt;              FROM INFORMATION_SCHEMA.PROFILING
+    -&gt;              WHERE QUERY_ID = 5
+    -&gt;         ), 2) AS Pct_R, 
+    -&gt;      COUNT(*) AS Calls,
+    -&gt;      SUM(DURATION) /COUNT(*) AS &quot;R/Call&quot; 
+    -&gt;  FROM NFORMATION_SCHEMA.PROFILING
+    -&gt;  WHERE QURY_ID = 5 
+    -&gt;  GROUP BY STATE
+    -&gt;  ORDER BY Total_R DESC;
+STATE                    Total_R       Pct_R  Calls     R/Call
+statistics                0.003509    88.93    1    0.0035090000
+freeing items            0.000131    3.32    1    0.0001310000
+Sending data            0.000093    2.36    1    0.0000930000
+starting                0.000077    1.95    1    0.0000770000
+init                    0.000043    1.09    1    0.0000430000
+preparing                0.000021    0.53    1    0.0000210000
+cleaning up                0.000014    0.35    1    0.0000140000
+Opening tables            0.000013    0.33    1    0.0000130000
+System lock                0.000010    0.25    1    0.0000100000
+closing tables            0.000009    0.23    1    0.0000090000
+optimizing                0.000008    0.20    1    0.0000080000
+end                        0.000006    0.15    1    0.0000060000
+checking permissions    0.000005    0.13    1    0.0000050000
+query end                0.000004    0.10    1    0.0000040000
+executing                0.000003    0.08    1    0.0000030000
+</code></pre><p>慢查询日志中详细记录的条目包含SHOW PROFILE和SHOWSTATUS所有的输出，还有更多的信息</p>
+<p>索引的类型<br>        在mysql中索引是在存储引擎层而不是服务器层实现的。所以没有统一的索引标准；不同存储引擎的索引工作方式也不一样，<br>    也不是所有的存储引擎都支持所有类型的索引。即使多个存储引擎都支持同一种索引，其底层的实现也可能不同</p>
+<pre><code>B-Tree索引
+    MyISAM使用前缀压缩技术使得索引更小（MyISAM索引通过数据的物理位置引用被索引的行），InnooDB则按照元数据格式进行存储（InnoDB根据主键引用被索引的行）。
+    所有的值都是按顺序存储的，每一个叶子页到根的距离相同
+    索引 对多个值进行排序的依据是create Table 语句中定义索引是列的顺序
+    适用于全键值，键值范围或键前缀查找，其中键前缀查找只适用于根据最左前缀的查找
+</code></pre><p>主键索引：主键索引的叶子节点存的是整行数据。<br>    在InnoDB中，主键索引也被成为聚簇索引<br>非主键索引：非主键索引的叶子节点内存是主键的值。<br>    在InnoDB中，非主键索引也被成为二级索引</p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yulongphp.github.io/2019/06/27/高性能mysql/" data-id="cjxlei9qu002yp38yld4bsj7l" class="article-share-link">分享到</a><div class="tags"></div><div class="post-nav"><a href="/2019/06/27/mysql总结/" class="pre">Linux 性能监控那些令人激赏的命令行工具</a><a href="/2019/06/25/算法与数据结构/" class="next"></a></div><div id="disqus_thread"><script>var disqus_shortname = 'yulong';
+var disqus_identifier = '2019/06/27/高性能mysql/';
+var disqus_title = '';
+var disqus_url = 'http://yulongphp.github.io/2019/06/27/高性能mysql/';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//yulong.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yulongphp.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/debian/">debian</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php7/">php7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sublime/">sublime</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/日志/">日志</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/hack/" style="font-size: 15px;">hack</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/list/" style="font-size: 15px;">list</a> <a href="/tags/tuple/" style="font-size: 15px;">tuple</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/安全/" style="font-size: 15px;">安全</a> <a href="/tags/debian/" style="font-size: 15px;">debian</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/MarkDown/" style="font-size: 15px;">MarkDown</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/service/" style="font-size: 15px;">service</a> <a href="/tags/nginx/" style="font-size: 15px;">nginx</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/php7/" style="font-size: 15px;">php7</a> <a href="/tags/tcl/" style="font-size: 15px;">tcl</a> <a href="/tags/tk/" style="font-size: 15px;">tk</a> <a href="/tags/sed/" style="font-size: 15px;">sed</a> <a href="/tags/vim/" style="font-size: 15px;">vim</a> <a href="/tags/vsftp/" style="font-size: 15px;">vsftp</a> <a href="/tags/开始/" style="font-size: 15px;">开始</a> <a href="/tags/我/" style="font-size: 15px;">我</a> <a href="/tags/日记/" style="font-size: 15px;">日记</a> <a href="/tags/ubuntu/" style="font-size: 15px;">ubuntu</a> <a href="/tags/sudo/" style="font-size: 15px;">sudo</a> <a href="/tags/sublime/" style="font-size: 15px;">sublime</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/06/29/mysql实战45讲/">mysql实战45讲</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/27/mysql总结/">Linux 性能监控那些令人激赏的命令行工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/27/高性能mysql/">高性能mysql</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/25/算法与数据结构/">算法与数据结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/25/sed/">sed常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/24/分布式锁/">分布式锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/24/mysql实战章节小结/">Linux 性能监控那些令人激赏的命令行工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/05/mysql查询优化/">mysql查询优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/01/php部分语法的AST栈符号表和指令集/">php 部分语法的AST、栈、符号表、和指令集</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/30/php代码的编译和执行/">php 代码的编译与执行</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//yulong.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://yanshinian.com/" title="言十年" target="_blank">言十年</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Mryy的博客.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

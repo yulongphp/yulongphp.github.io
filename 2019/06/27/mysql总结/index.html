@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="一个苦逼屌丝程序员的技术博客"><title>Linux 性能监控那些令人激赏的命令行工具 | Mryy的博客</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.0/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Linux 性能监控那些令人激赏的命令行工具</h1><a id="logo" href="/.">Mryy的博客</a><p class="description">生活不仅只是敲代码，还有...调bug...</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Linux 性能监控那些令人激赏的命令行工具</h1><div class="post-meta">Jun 27, 2019<span> | </span><span class="category"><a href="/categories/mysql/">mysql</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><a data-disqus-identifier="2019/06/27/mysql总结/" href="/2019/06/27/mysql总结/#disqus_thread" class="disqus-comment-count"></a><div class="post-content"><p>一. MyISAM 和 Innodb区别？<br>    1) MyISAM只能加全局锁做全库逻辑备份<br>    2) 不支持行锁, 意味着并发控制只能使用表锁，同一张表上任何时刻只能有一个更新在执行<br>    3) 不支持外键<br>    4）count(*) 直接读取保存好的总行数  有where条件的话也是扫描全表<br>    5） 支持全文索引，压缩索引<br>    6）MyISAM的索引和数据是分开的，并且索引是有压缩的，内存使用率就对应提高了不少。能加载更多索引<br>    7）不支持事务和mvcc（多版本并发控制）<br>    8）查询比较多的业务<br>    9）非聚集索引，索引存储的是物理地址<br>    10）允许没有任何索引和主键的表存在，索引都是保存行的地址<br>    11）frm是表定义文件，myd是数据文件，myi是索引文件</p>
+<pre><code>1）Innodb可以在REPEATABLE READ(可重复读)隔离级别，用mysqldump工具加-single-transation参数做全库备份，导数据之前就会启动一个事务，来确保拿到一致性视图。而由于 MVCC 的支持， 这个过程中数据是可以正常更新的.
+2）支持行锁
+3）支持外键
+4) Crash Safe (redo log)
+5) 支持事务和mvcc（多版本并发控制）
+6) 可以在线热备份
+7) count(*) 需要扫描全表
+8）DELETE FROM table时，InnoDB不会重新建立表，而是一行一行的删除。
+10）聚集索引，非聚集索引 覆盖索引
+11）数据文件就是索引文件 
+12）不支持全文索引， 可以适用sphinx插件支持全文索引，并且效果更好  
+13） Innodb存储文件有frm、ibd frm表定义文件 ibd数据文件
+14 ）InnoDB表必须有主键（用户没有指定的话会自己找或生产一个主键）
+
+如何选择：
+    1. 是否要支持事务，如果要请选择innodb，如果不需要可以考虑MyISAM；
+    2. 如果表中绝大多数都只是读查询，可以考虑MyISAM，如果既有读也有写，请使用InnoDB。
+    3. 系统奔溃后，MyISAM恢复起来更困难，能否接受；
+    4. MySQL5.5版本开始Innodb已经成为Mysql的默认引擎(之前是MyISAM)，说明其优势是有目共睹的，如果你不知道用什么，那就用InnoDB，至少不会差。
+</code></pre><p>二. cgi和fastcgi区别<br>    CGI<br>        什么是cgi？<br>            1）CGI（Common Gateway Interface）全称是“通用网关接口”，是一种让客户端（web浏览器）与Web服务器（nginx等）程序进行通信（数据传输）的协议。<br>                用来规范web服务器传输到php解释器中的数据类型以及数据格式，包括URL、查询字符串、POST数据、HTTP header等，也就是为了保证web server传递过来的数据是标准格式的。<br>            2）CGI可以用任何一种具有标准输入、输出和环境变量的语言编写，如php、perl、tcl等。<br>                不同类型语言写的程序只要符合cgi标准，就能作为一个cgi程序与web服务器交互，早期的cgi大多都是c或c++编写的。<br>            3）一般说的CGI指的是用各种语言编写的能实现该功能的程序。<br>        工作原理：<br>            1）每次当web server收到index.php这种类型的动态请求后，会启动对应的CGI程序（PHP的解析器）；<br>            2）PHP解析器会解析php.ini配置文件，初始化运行环境，然后处理请求，处理完成后将数据按照CGI规定的格式返回给web server然后退出进程；<br>            3）最后web server再把结果返回给浏览器。<br>        CGI程序的特点<br>            1）高并发时的性能较差：<br>                CGI程序的每一次web请求都会有启动和退出过程，也就是最为人诟病的fork-and-execute模式（每次HTTP服务器遇到动态请求时都需要重新启动脚本解析器来解析php.ini，重新载入全部DLL扩展并重初始化全部数据结构，然后把结果返回给HTTP服务器），很明显，这样的接口方式会导致php的性能很差，在处理高并发访问时，几乎是不可用的。<br>            2）传统的CGI接口方式安全性较差<br>            3）CGI对php.ini的配置很敏感，在开发和调试的时候相当方便<br>        CGI程序的应用领域<br>            因为CGI为每一次请求增加一个进程，效率很低，所以基本已经不在生产部署时采用。<br>            但由于CGI对php配置的敏感性，通常被用在开发和调试阶段<br>    FASTCGI<br>        什么是fastcgi?<br>            通过CGI程序的工作原理可以看出：CGI程序性能较差，安全性较低，为了解决这些问题产生了FastCGI。<br>            1）FastCGI（Fast Common Gateway Interface）全称是“快速通用网关接口”<br>                是通用网关接口（CGI）的增强版本，由CGI发展改进而来，主要用来提高CGI程序性能，<br>                类似于CGI，FastCGI也是一种让交互程序与Web服务器通信的协议<br>            2）FastCGI致力于减少网页服务器与CGI程序之间互动的开销，从而使服务器可以同时处理更多的网页请求（提高并发访问）。<br>            3）同样的，一般说的FastCGI指的也是用各种语言编写的能实现该功能的程序<br>        工作原理:<br>            1）Web Server启动同时，加载FastCGI进程管理器（nginx的php-fpm或者IIS的ISAPI或Apache的Module)<br>            2）FastCGI进程管理器读取php.ini配置文件，对自身进行初始化，启动多个CGI解释器进程(php-cgi)，等待来自Web Server的连接。<br>            3）当Web Server接收到客户端请求时，FastCGI进程管理器选择并连接到一个CGI解释器。Web server会将相关环境变量和标准输入发送到FastCGI子进程php-cgi进行处理<br>            4）FastCGI子进程完成处理后将数据按照CGI规定的格式返回给Web Server，然后关闭FastCGI子进程或者等待下一次请求<br>        FastCGI对进程的管理方式<br>            Fastcgi会先启一个master，解析配置文件，初始化执行环境，然后再启动多个worker。<br>            当请求过来时，master会传递给一个worker，然后立即可以接受下一个请求。<br>            这样就避免了重复的劳动，效率自然提高。<br>            而且当worker不够用时，master可以根据配置预先启动几个worker等着；<br>            当然空闲worker太多时，也会停掉一些，这样就提高了性能，也节约了资源。这就是fastcgi的对进程的管理。</p>
+<p>三. 天下无难试之Redis面试刁难大全</p>
+<pre><code>1. Redis有哪些数据结构？
+    字符串String、字典Hash、列表List、集合Set、有序集合SortedSet。
+    如果你是Redis中高级用户，还需要加上下面几种数据结构HyperLogLog、Geo、Pub/Sub。
+    如果你说还玩过Redis Module，像BloomFilter，RedisSearch，Redis-ML，面试官得眼睛就开始发亮了。
+
+2. 使用过Redis分布式锁么，它是什么回事？
+    先拿setnx来争抢锁，抢到之后，再用expire给锁加一个过期时间防止锁忘记了释放。
+    这时候对方会告诉你说你回答得不错，然后接着问如果在setnx之后执行expire之前进程意外crash或者要重启维护了，那会怎么样？
+    这时候你要给予惊讶的反馈：唉，是喔，这个锁就永远得不到释放了。紧接着你需要抓一抓自己得脑袋，故作思考片刻，好像接下来的结果是你主动思考出来的，然后回答：我记得set指令有非常复杂的参数，这个应该是可以同时把setnx和expire合成一条指令来用的！对方这时会显露笑容，心里开始默念：摁，这小子还不错。
+
+3. 假如Redis里面有1亿个key，其中有10w个key是以某个固定的已知的前缀开头的，如果将它们全部找出来？
+    使用keys指令可以扫出指定模式的key列表。
+    对方接着追问：如果这个redis正在给线上的业务提供服务，那使用keys指令会有什么问题？
+    这个时候你要回答redis关键的一个特性：redis的单线程的。keys指令会导致线程阻塞一段时间，线上服务会停顿，直到指令执行完毕，服务才能恢复。这个时候可以使用scan指令，scan指令可以无阻塞的提取出指定模式的key列表，但是会有一定的重复概率，在客户端做一次去重就可以了，但是整体所花费的时间会比直接用keys指令长。
+
+4. 使用过Redis做异步队列么，你是怎么用的？
+    一般使用list结构作为队列，rpush生产消息，lpop消费消息。当lpop没有消息的时候，要适当sleep一会再重试。
+    如果对方追问可不可以不用sleep呢？list还有个指令叫blpop，在没有消息的时候，它会阻塞住直到消息到来。
+    如果对方追问能不能生产一次消费多次呢？使用pub/sub主题订阅者模式，可以实现1:N的消息队列。
+    如果对方追问pub/sub有什么缺点？在消费者下线的情况下，生产的消息会丢失，得使用专业的消息队列如rabbitmq等。
+    如果对方追问redis如何实现延时队列？我估计现在你很想把面试官一棒打死如果你手上有一根棒球棍的话，怎么问的这么详细。但是你很克制，然后神态自若的回答道：使用sortedset，拿时间戳作为score，消息内容作为key调用zadd来生产消息，消费者用zrangebyscore指令获取N秒之前的数据轮询进行处理。
+    到这里，面试官暗地里已经对你竖起了大拇指。但是他不知道的是此刻你却竖起了中指，在椅子背后。
+
+5. 如果有大量的key需要设置同一时间过期，一般需要注意什么？
+    如果大量的key过期时间设置的过于集中，到过期的那个时间点，redis可能会出现短暂的卡顿现象。一般需要在时间上加一个随机值，使得过期时间分散一些。
+
+6. Redis如何做持久化的？
+    bgsave做镜像全量持久化，aof做增量持久化。因为bgsave会耗费较长时间，不够实时，在停机的时候会导致大量丢失数据，所以需要aof来配合使用。在redis实例重启时，优先使用aof来恢复内存的状态，如果没有aof日志，就会使用rdb文件来恢复。
+    如果再问aof文件过大恢复时间过长怎么办？你告诉面试官，Redis会定期做aof重写，压缩aof文件日志大小。如果面试官不够满意，再拿出杀手锏答案，Redis4.0之后有了混合持久化的功能，将bgsave的全量和aof的增量做了融合处理，这样既保证了恢复的效率又兼顾了数据的安全性。这个功能甚至很多面试官都不知道，他们肯定会对你刮目相看。
+    如果对方追问那如果突然机器掉电会怎样？取决于aof日志sync属性的配置，如果不要求性能，在每条写指令时都sync一下磁盘，就不会丢失数据。但是在高性能的要求下每次都sync是不现实的，一般都使用定时sync，比如1s1次，这个时候最多就会丢失1s的数据。
+    如果对方追问bgsave的原理是什么？你给出两个词汇就可以了，fork和cow。fork是指redis通过创建子进程来进行bgsave操作，cow指的是copy on write，子进程创建后，父子进程共享数据段，父进程继续提供读写服务，写脏的页面数据会逐渐和子进程分离开来。
+
+7. Pipeline有什么好处，为什么要用pipeline？
+    可以将多次IO往返的时间缩减为一次，前提是pipeline执行的指令之间没有因果相关性。使用redis-benchmark进行压测的时候可以发现影响redis的QPS峰值的一个重要因素是pipeline批次指令的数目。
+
+8. Redis的同步机制了解么？
+    Redis可以使用主从同步，从从同步。第一次同步时，主节点做一次bgsave，并同时将后续修改操作记录到内存buffer，待完成后将rdb文件全量同步到复制节点，复制节点接受完成后将rdb镜像加载到内存。加载完成后，再通知主节点将期间修改的操作记录同步到复制节点进行重放就完成了同步过程。
+
+9. 是否使用过Redis集群，集群的原理是什么？
+    Redis Sentinal着眼于高可用，在master宕机时会自动将slave提升为master，继续提供服务。
+    Redis Cluster着眼于扩展性，在单个redis内存不足时，使用Cluster进行分片存储。
+</code></pre><p>四 、去除当前日志格式client_id 参数值排名前10位？<br>    [14/Dec/2017:17:19:17 +0800] “GET /access?client_id=user&amp;client_secret=137u1S0Xe4C5I01T3w7l70Gv HTTP/1.1” 200 132 - “0.097” “0.097”<br>    &gt; grep ‘access’ oauth.xidibuy.com |awk -F ‘=’ ‘{print $2}’ | cut -d ‘&amp;’ -f 1 | sort | uniq -c | sort -rn<br>1548301 dealer<br> 255730 mobile<br>  39440 pc_admin<br>  21445 wxapp<br>  14033 user<br>   5274 internal_open_api</p>
+<p>五、设计模式<br>单例：<br>    class DB{<br>        private static $db = null;<br>        private function _construct(){</p>
+<pre><code>    }
+    public static function getInstance(){
+        if(!self::db instance of DB){
+            self::$db = new self();
+        }
+        return self::$db;
+    }
+    private staticc function __clone(){
+
+    }
+}
+</code></pre><p>适配器：<br>    interface IDatabase{<br>        function connect($host, $user, $passwd, $dbname);<br>        function query($sql);<br>        function close();<br>    }<br>    class Mysql implements IDatabase{<br>        function connect($host, $user, $passwd, $dbname);<br>        function query($sql);<br>        function close();<br>    }<br>    class PDO implements IDatabase{<br>        function connect($host, $user, $passwd, $dbname);<br>        function query($sql);<br>        function close();<br>    }<br>观察者：<br>    //事件产生者(被观察者)<br>    abstract class EventGenerator {<br>        //保存众多观察者实例<br>        private $observers = array();<br>        function addObserver(Observer $observer){<br>            $this-&gt;observers[] = $observer;<br>        }</p>
+<pre><code>    function notify(){
+        foreach($this-&gt;observers as $observer){
+            $observer-&gt;update();
+        }
+    }
+} 
+//具体事件
+class Event extends EventGenerator{
+    function trigger(){
+        echo &quot;Event\n&quot;;
+        $this-&gt;notify();
+    }
+}
+//观察者接口
+interface Observer {
+    function update($event_info = null);
+}
+//观察者1
+class  Observer1 implements Observer{
+    function update($event_info = null) {
+        echo &quot;逻辑1\n&quot;;
+    }
+}
+//观察者2
+class  Observer2 implements Observer{
+    function update($event_info = null) {
+        echo &quot;逻辑2\n&quot;;
+    }
+}
+
+$event = new Event;
+$event-&gt;addObserver(new Observer1);
+$event-&gt;addObserver(new Observer1);
+$event-&gt;trigger();
+</code></pre><p>六、排序<br> 二分查找：<br>    function binSearch($arr, $f){<br>        $c = count($arr);<br>        $l = 0;<br>        $h = $c - 1;<br>        while($l &lt;= $h){<br>            $m = floor(($l+$h)/2);<br>            echo $l,’=’,$h,’=’,$m,”\n”;<br>            if($f &gt; $arr[$m]){<br>                $l = $m + 1;<br>            }elseif($f &lt; $arr[$m]){<br>                $h = $m - 1;<br>            }else{<br>                return $m;<br>            }<br>        }<br>        return -1;<br>    }<br>快速排序：<br>    def quickSort(arr){<br>        if len(arr) &lt; 2:<br>            return arr<br>        else :<br>            min = [x for x in arr[1:] if x &lt; arr[0]]<br>            max = [x for x in arr[1:] if x &gt;= arr[0]]<br>            return quickSort(min) + [arr[0]] + quickSort(max)<br>    }<br>反转链表：<br>    def reverseList(self, head):<br>        cur, prev = head, None<br>        while cur:<br>            cur.next, prev, cur = prev, cur, cur.next<br>        return prev</p>
+<p>链表有环：<br>    def hasCycle(self, head){<br>        fast = slow = head<br>        while slow and fast and fast.next:<br>            slow = slow.next<br>            fast = fast.next.next<br>            if slow iss fast:<br>                return true<br>        return false<br>    }</p>
+<p>七、 分布式锁</p>
+<p>八、 消息队列好处，问题<br>九、</p>
+</div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="http://yulongphp.github.io/2019/06/27/mysql总结/" data-id="cjxlei9q60011p38yhve5leo3" class="article-share-link">分享到</a><div class="tags"><a href="/tags/mysql/">mysql</a></div><div class="post-nav"><a href="/2019/06/29/mysql实战45讲/" class="pre"></a><a href="/2019/06/27/高性能mysql/" class="next"></a></div><div id="disqus_thread"><script>var disqus_shortname = 'yulong';
+var disqus_identifier = '2019/06/27/mysql总结/';
+var disqus_title = 'Linux 性能监控那些令人激赏的命令行工具';
+var disqus_url = 'http://yulongphp.github.io/2019/06/27/mysql总结/';
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//yulong.disqus.com/count.js" async></script></div></div></div></div><div class="pure-u-1-4"><div id="sidebar"><div class="widget"><form action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://yulongphp.github.io"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C/">C</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/MarkDown/">MarkDown</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/debian/">debian</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/mysql/">mysql</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php/">php</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/php7/">php7</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sublime/">sublime</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/日志/">日志</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/hack/" style="font-size: 15px;">hack</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/list/" style="font-size: 15px;">list</a> <a href="/tags/tuple/" style="font-size: 15px;">tuple</a> <a href="/tags/php/" style="font-size: 15px;">php</a> <a href="/tags/安全/" style="font-size: 15px;">安全</a> <a href="/tags/debian/" style="font-size: 15px;">debian</a> <a href="/tags/docker/" style="font-size: 15px;">docker</a> <a href="/tags/MarkDown/" style="font-size: 15px;">MarkDown</a> <a href="/tags/linux/" style="font-size: 15px;">linux</a> <a href="/tags/service/" style="font-size: 15px;">service</a> <a href="/tags/nginx/" style="font-size: 15px;">nginx</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/C/" style="font-size: 15px;">C</a> <a href="/tags/php7/" style="font-size: 15px;">php7</a> <a href="/tags/tcl/" style="font-size: 15px;">tcl</a> <a href="/tags/tk/" style="font-size: 15px;">tk</a> <a href="/tags/sed/" style="font-size: 15px;">sed</a> <a href="/tags/vim/" style="font-size: 15px;">vim</a> <a href="/tags/vsftp/" style="font-size: 15px;">vsftp</a> <a href="/tags/开始/" style="font-size: 15px;">开始</a> <a href="/tags/我/" style="font-size: 15px;">我</a> <a href="/tags/日记/" style="font-size: 15px;">日记</a> <a href="/tags/ubuntu/" style="font-size: 15px;">ubuntu</a> <a href="/tags/sudo/" style="font-size: 15px;">sudo</a> <a href="/tags/sublime/" style="font-size: 15px;">sublime</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最新文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/06/29/mysql实战45讲/">mysql实战45讲</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/27/mysql总结/">Linux 性能监控那些令人激赏的命令行工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/27/高性能mysql/">高性能mysql</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/25/算法与数据结构/">算法与数据结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/25/sed/">sed常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/24/分布式锁/">分布式锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/24/mysql实战章节小结/">Linux 性能监控那些令人激赏的命令行工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/05/mysql查询优化/">mysql查询优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/01/php部分语法的AST栈符号表和指令集/">php 部分语法的AST、栈、符号表、和指令集</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/30/php代码的编译和执行/">php 代码的编译与执行</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//yulong.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://yanshinian.com/" title="言十年" target="_blank">言十年</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">© <a href="/." rel="nofollow">Mryy的博客.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css?v=0.0.0"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
